@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30001.183
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmaOps.Droid", "ArmaOps\ArmaOps.Droid.csproj", "{3A01C3B8-C6B2-4A6E-BD7F-911EA8A6FE7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmaOps.Application", "ArmaOps.Application\ArmaOps.Application.csproj", "{A5A95239-D434-4437-BE6B-56D282648B87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmaOps.Storage", "ArmaOps.Storage\ArmaOps.Storage.csproj", "{4A451A25-7636-4CE9-80EE-7423B0127550}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmaOps.Domain", "ArmaOps.Domain\ArmaOps.Domain.csproj", "{97978CAA-5EBB-4BF8-9769-C9065DC18F9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmaOps.Test", "ArmaOps.Test\ArmaOps.Test.csproj", "{13874F3A-073C-480F-A0DF-97A0DE7D68BA}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "ArmaOps.Caching", "ArmaOps.Caching\ArmaOps.Caching.fsproj", "{E670E0A2-11D6-47B7-AC0A-ECDD9AE8E430}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3A01C3B8-C6B2-4A6E-BD7F-911EA8A6FE7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A01C3B8-C6B2-4A6E-BD7F-911EA8A6FE7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A01C3B8-C6B2-4A6E-BD7F-911EA8A6FE7A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{3A01C3B8-C6B2-4A6E-BD7F-911EA8A6FE7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A01C3B8-C6B2-4A6E-BD7F-911EA8A6FE7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A01C3B8-C6B2-4A6E-BD7F-911EA8A6FE7A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{A5A95239-D434-4437-BE6B-56D282648B87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5A95239-D434-4437-BE6B-56D282648B87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5A95239-D434-4437-BE6B-56D282648B87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5A95239-D434-4437-BE6B-56D282648B87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A451A25-7636-4CE9-80EE-7423B0127550}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A451A25-7636-4CE9-80EE-7423B0127550}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A451A25-7636-4CE9-80EE-7423B0127550}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A451A25-7636-4CE9-80EE-7423B0127550}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97978CAA-5EBB-4BF8-9769-C9065DC18F9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97978CAA-5EBB-4BF8-9769-C9065DC18F9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97978CAA-5EBB-4BF8-9769-C9065DC18F9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97978CAA-5EBB-4BF8-9769-C9065DC18F9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13874F3A-073C-480F-A0DF-97A0DE7D68BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13874F3A-073C-480F-A0DF-97A0DE7D68BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13874F3A-073C-480F-A0DF-97A0DE7D68BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13874F3A-073C-480F-A0DF-97A0DE7D68BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E670E0A2-11D6-47B7-AC0A-ECDD9AE8E430}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E670E0A2-11D6-47B7-AC0A-ECDD9AE8E430}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E670E0A2-11D6-47B7-AC0A-ECDD9AE8E430}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E670E0A2-11D6-47B7-AC0A-ECDD9AE8E430}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EEFAF0A1-5634-4AD7-8FB9-E5C9E2E25371}
+	EndGlobalSection
+EndGlobal
