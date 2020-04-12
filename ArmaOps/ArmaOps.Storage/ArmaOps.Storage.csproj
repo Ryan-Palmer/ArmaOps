@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ArmaOps.Application\ArmaOps.Application.csproj" />
+    <ProjectReference Include="..\ArmaOps.Domain\ArmaOps.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
