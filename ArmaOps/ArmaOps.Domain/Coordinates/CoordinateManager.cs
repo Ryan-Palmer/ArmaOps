@@ -6,20 +6,27 @@ namespace ArmaOps.Domain.Coordinates
 {
     public interface ICoordinateManager
     {
-        Polar ToPolar(Cartesian cartesian);
-        Cartesian ToCartesian(Polar polar);
+        Polar ToPolar(Cartesian f0, Cartesian target);
+        Cartesian ToCartesian(Polar pol);
     }
 
     public class CoordinateManager : ICoordinateManager
     {
-        public Cartesian ToCartesian(Polar polar)
+        public Polar ToPolar(Cartesian fO, Cartesian target)
         {
-            throw new NotImplementedException();
+            var diff = Cartesian.Subtract(target, fO);
+            var azimuth = Math.Atan2(diff.X, diff.Y);
+            var elevation = 0.0;
+            var dist = Math.Sqrt(Math.Pow(diff.X,2) + Math.Pow(diff.Y,2));
+            return new Polar(fO, azimuth, elevation, dist);
         }
 
-        public Polar ToPolar(Cartesian cartesian)
+        public Cartesian ToCartesian(Polar pol)
         {
-            throw new NotImplementedException();
+            var dx = pol.Distance * Math.Sin(pol.Azimuth);
+            var dy = pol.Distance * Math.Cos(pol.Azimuth);
+            var dz = 0.0;
+            return new Cartesian(dx, dy, dz).Add(pol.FO);
         }
     }
 }
