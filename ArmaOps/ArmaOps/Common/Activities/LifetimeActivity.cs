@@ -28,7 +28,7 @@ namespace ArmaOps.Droid.Common.Activities
             });
 
             ViewLayoutScope = ViewInstanceScope?.BeginLifetimeScope();
-            ViewLayoutScope?.Inject(this, InjectionPoint.ViewStart);
+            ViewLayoutScope?.Inject(this, InjectionPoint.ViewCreate);
         }
 
         protected override void OnDestroy()

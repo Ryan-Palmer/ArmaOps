@@ -6,6 +6,7 @@ namespace ArmaOps.Storage
     {
         public static void ConfigureStorage(this IServiceCollection services)
         {
+            // Setup database, repositories etc
         }
     }
 }

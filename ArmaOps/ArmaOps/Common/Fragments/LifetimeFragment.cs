@@ -13,7 +13,7 @@ namespace ArmaOps.Droid.Common.Fragments
     {
         ScopeViewModel? _scopeViewModel;
         bool _onCreateViewWasCalled;
-        protected ILifetimeScope? ViewInstanceScope;
+        protected ILifetimeScope? ViewCreateScope;
         protected ILifetimeScope? ViewLayoutScope;
 
         public override void OnCreate(Bundle savedInstanceState)
@@ -21,21 +21,22 @@ namespace ArmaOps.Droid.Common.Fragments
             base.OnCreate(savedInstanceState);
 
             _scopeViewModel = new ViewModelProvider(this).Get(Java.Lang.Class.FromType(typeof(ScopeViewModel))) as ScopeViewModel;
+            _scopeViewModel?.ViewLifetimeScope?.Inject(this, InjectionPoint.ViewLifetime);
 
-            ViewInstanceScope = _scopeViewModel?.ViewLifetimeScope?.BeginLifetimeScope(builder =>
+            ViewCreateScope = _scopeViewModel?.ViewLifetimeScope?.BeginLifetimeScope(builder =>
             {
                 builder.RegisterInstance(Activity).As<Activity>().ExternallyOwned();
                 builder.RegisterInstance(LayoutInflater.From(Activity)).ExternallyOwned();
                 builder.RegisterInstance(this).As<AndroidX.Fragment.App.Fragment>().ExternallyOwned();
             });
 
-            ViewInstanceScope?.Inject(this);
+            ViewCreateScope?.Inject(this, InjectionPoint.ViewCreate);
         }
 
         public override View? OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             _onCreateViewWasCalled = true;
-            ViewLayoutScope = ViewInstanceScope?.BeginLifetimeScope();
+            ViewLayoutScope = ViewCreateScope?.BeginLifetimeScope();
             ViewLayoutScope?.Inject(this, InjectionPoint.ViewLayout);
             return null;
         }
@@ -56,7 +57,7 @@ namespace ArmaOps.Droid.Common.Fragments
         public override void OnDestroy()
         {
             base.OnDestroy();
-            ViewInstanceScope?.Dispose();
+            ViewCreateScope?.Dispose();
         }
     }
 }

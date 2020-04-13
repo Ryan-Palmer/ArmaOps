@@ -10,7 +10,7 @@ namespace ArmaOps.Application
         public static void ConfigureApplication(this IServiceCollection services)
         {
             services.AddScoped<IExampleViewModel, ExampleViewModel>();
-            services.AddScoped<IExampleCellViewModel, ExampleCellViewModel>();
+            services.AddTransient<IExampleCellViewModel, ExampleCellViewModel>();
             services.AddTransient<IMainThreadDispatcher, MainThreadDispatcher>();
             services.AddTransient<IExampleService, ExampleService>();
         }

@@ -17,7 +17,8 @@ namespace ArmaOps.Common
 
     public enum InjectionPoint
     {
-        ViewStart,
+        ViewLifetime,
+        ViewCreate,
         ViewLayout
     }
 
@@ -26,15 +27,22 @@ namespace ArmaOps.Common
     {
         public InjectionPoint InjectionPoint { get; }
 
-        public InjectAttribute(InjectionPoint injectionPoint = InjectionPoint.ViewStart)
+        public InjectAttribute(InjectionPoint injectionPoint = InjectionPoint.ViewLifetime)
         {
             InjectionPoint = injectionPoint;
         }
     }
 
+    public class InjectViewLifetimeAttribute : InjectAttribute
+    {
+        public InjectViewLifetimeAttribute() : base(InjectionPoint.ViewLifetime)
+        {
+        }
+    }
+
     public class InjectOnCreateAttribute : InjectAttribute
     {
-        public InjectOnCreateAttribute() : base(InjectionPoint.ViewStart)
+        public InjectOnCreateAttribute() : base(InjectionPoint.ViewCreate)
         {
         }
     }
@@ -48,13 +56,13 @@ namespace ArmaOps.Common
 
     public static class AutofacExtensions
     {
-        public static void Inject(this ILifetimeScope scope, object obj, InjectionPoint injectionPoint = InjectionPoint.ViewStart)
+        public static void Inject(this ILifetimeScope scope, object obj, InjectionPoint injectionPoint = InjectionPoint.ViewLifetime)
         {
             var type = obj.GetType();
 
             while (type != null)
             {
-                var propertiesToInject = type.GetRuntimeProperties().Where(x => x.GetCustomAttributes().Any(a => a is InjectAttribute && (a as InjectAttribute).InjectionPoint == injectionPoint));//  .CustomAttributes.Any(y => y.AttributeType.Name == nameof(InjectAttribute)));
+                var propertiesToInject = type.GetRuntimeProperties().Where(x => x.GetCustomAttributes().Any(a => a is InjectAttribute && (a as InjectAttribute).InjectionPoint == injectionPoint));
 
                 foreach (var property in propertiesToInject)
                 {

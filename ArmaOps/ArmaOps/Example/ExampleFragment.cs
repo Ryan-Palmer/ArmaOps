@@ -20,7 +20,7 @@ namespace ArmaOps.Droid.Example
     {
         readonly IList<Binding> _bindings = new List<Binding>();
 
-        [InjectOnCreate]
+        [InjectViewLifetime]
         IExampleViewModel? _viewModel;
 
         [InjectOnCreateView]

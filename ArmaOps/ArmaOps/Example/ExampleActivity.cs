@@ -13,7 +13,7 @@ namespace ArmaOps.Droid.Example
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_example);
-            LoadFragment(ExampleFragment.NewInstance());
+            if (savedInstanceState == null) LoadFragment(ExampleFragment.NewInstance());
         }
 
         public void LoadFragment(Fragment fragment)
