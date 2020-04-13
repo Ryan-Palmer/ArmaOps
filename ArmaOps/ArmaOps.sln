@@ -5,15 +5,17 @@ VisualStudioVersion = 16.0.30001.183
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmaOps.Droid", "ArmaOps\ArmaOps.Droid.csproj", "{3A01C3B8-C6B2-4A6E-BD7F-911EA8A6FE7A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmaOps.Application", "ArmaOps.Application\ArmaOps.Application.csproj", "{A5A95239-D434-4437-BE6B-56D282648B87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArmaOps.Application", "ArmaOps.Application\ArmaOps.Application.csproj", "{A5A95239-D434-4437-BE6B-56D282648B87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmaOps.Storage", "ArmaOps.Storage\ArmaOps.Storage.csproj", "{4A451A25-7636-4CE9-80EE-7423B0127550}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArmaOps.Storage", "ArmaOps.Storage\ArmaOps.Storage.csproj", "{4A451A25-7636-4CE9-80EE-7423B0127550}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmaOps.Domain", "ArmaOps.Domain\ArmaOps.Domain.csproj", "{97978CAA-5EBB-4BF8-9769-C9065DC18F9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArmaOps.Domain", "ArmaOps.Domain\ArmaOps.Domain.csproj", "{97978CAA-5EBB-4BF8-9769-C9065DC18F9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmaOps.Test", "ArmaOps.Test\ArmaOps.Test.csproj", "{13874F3A-073C-480F-A0DF-97A0DE7D68BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArmaOps.Test", "ArmaOps.Test\ArmaOps.Test.csproj", "{13874F3A-073C-480F-A0DF-97A0DE7D68BA}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "ArmaOps.Caching", "ArmaOps.Caching\ArmaOps.Caching.fsproj", "{E670E0A2-11D6-47B7-AC0A-ECDD9AE8E430}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmaOps.Common", "ArmaOps.Common\ArmaOps.Common.csproj", "{2347D8D4-3819-4E60-8941-F289676113D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{E670E0A2-11D6-47B7-AC0A-ECDD9AE8E430}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E670E0A2-11D6-47B7-AC0A-ECDD9AE8E430}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E670E0A2-11D6-47B7-AC0A-ECDD9AE8E430}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2347D8D4-3819-4E60-8941-F289676113D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2347D8D4-3819-4E60-8941-F289676113D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2347D8D4-3819-4E60-8941-F289676113D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2347D8D4-3819-4E60-8941-F289676113D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

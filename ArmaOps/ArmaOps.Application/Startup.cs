@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ArmaOps.Application.Example.Services;
+using ArmaOps.Application.Example.ViewModels;
+using ArmaOps.Common;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ArmaOps.Application
 {
@@ -9,6 +9,10 @@ namespace ArmaOps.Application
     {
         public static void ConfigureApplication(this IServiceCollection services)
         {
+            services.AddScoped<IExampleViewModel, ExampleViewModel>();
+            services.AddScoped<IExampleCellViewModel, ExampleCellViewModel>();
+            services.AddTransient<IMainThreadDispatcher, MainThreadDispatcher>();
+            services.AddTransient<IExampleService, ExampleService>();
         }
     }
 }
