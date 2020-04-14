@@ -23,6 +23,14 @@ namespace ArmaOps.Domain.Coordinates
             Distance = distance;
         }
 
+        public Cartesian ToCartesian()
+        {
+            var dx = Distance * Math.Sin(Azimuth);
+            var dy = Distance * Math.Cos(Azimuth);
+            var dz = 0.0;
+            return new Cartesian(dx, dy, dz).Add(ForwardObserver.Location);
+        }
+
         public override bool Equals(object obj)
         {
             if (obj != null)

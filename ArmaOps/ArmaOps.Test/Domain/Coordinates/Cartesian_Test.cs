@@ -1,4 +1,5 @@
-﻿using ArmaOps.Domain.Coordinates;
+﻿using ArmaOps.Domain;
+using ArmaOps.Domain.Coordinates;
 using AutoFixture.NUnit3;
 using NUnit.Framework;
 using System;
@@ -10,6 +11,19 @@ namespace ArmaOps.Test.Domain.Coordinates
     [TestFixture]
     public class Cartesian_Test
     {
+        [Test, AutoData]
+        public void Origin2DCartesianConvertsToPolar(
+            string foName)
+        {
+            var originFO = new ForwardObserver(new Cartesian(0, 0, 0), foName);
+            var originTarget = new Cartesian(0, 1, 0);
+            var expectedResult = new Polar(originFO, 0, 1, 0);
+
+            var result = originTarget.ToPolar(originFO);
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
         [Test, AutoData]
         public void EqualsTrueIfAllValuesMatch(Cartesian sut)
         {

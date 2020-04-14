@@ -12,6 +12,19 @@ namespace ArmaOps.Test.Domain.Coordinates
     public class Polar_Test
     {
         [Test, AutoData]
+        public void OriginPolarConvertsToCartesian(
+            string foName)
+        {
+            var originFO = new ForwardObserver(new Cartesian(0, 0, 0), foName);
+            var originPolar = new Polar(originFO, 0, 0, 1);
+            var expectedResult = new Cartesian(0, 1, 0);
+
+            var result = originPolar.ToCartesian();
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test, AutoData]
         public void EqualsTrueIfAllValuesMatch(Polar sut)
         {
             var sameValues = new Polar(sut.ForwardObserver, sut.Azimuth, sut.Elevation, sut.Distance);
