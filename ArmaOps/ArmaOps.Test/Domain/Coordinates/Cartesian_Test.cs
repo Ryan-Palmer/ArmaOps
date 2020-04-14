@@ -8,7 +8,7 @@ using System.Text;
 namespace ArmaOps.Test.Domain.Coordinates
 {
     [TestFixture]
-    public class Coordinate_Test
+    public class Cartesian_Test
     {
         [Test, AutoData]
         public void EqualsTrueIfAllValuesMatch(Cartesian sut)
