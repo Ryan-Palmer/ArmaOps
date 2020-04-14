@@ -24,7 +24,8 @@ namespace ArmaOps.Domain
                 if (other != null)
                 {
                     return
-                        other.Location.Equals(this.Location);
+                        other.Location.Equals(this.Location)
+                        && other.Name.Equals(this.Name);
                 }
             }
             return false;
@@ -32,7 +33,7 @@ namespace ArmaOps.Domain
 
         public override int GetHashCode()
         {
-            return Location.GetHashCode();
+            return (Location, Name).GetHashCode();
         }
     }
 }
