@@ -32,10 +32,7 @@ namespace ArmaOps.Domain.Coordinates
 
         public Cartesian Subtract(Cartesian b)
         {
-            var dx = X - b.X;
-            var dy = Y - b.Y;
-            var dz = Z - b.Z;
-            return new Cartesian(dx, dy, dz);
+            return Subtract(this, b);
         }
 
         public static Cartesian Add(Cartesian a, Cartesian b)
@@ -48,10 +45,7 @@ namespace ArmaOps.Domain.Coordinates
 
         public Cartesian Add(Cartesian b)
         {
-            var dx = X + b.X;
-            var dy = Y + b.Y;
-            var dz = Z + b.Z;
-            return new Cartesian(dx, dy, dz);
+            return Add(this, b);
         }
 
         public override bool Equals(object obj)

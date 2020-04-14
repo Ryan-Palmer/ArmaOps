@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ArmaOps.Test.Domain.Coordinates
+namespace ArmaOps.Test.Domain
 {
     [TestFixture]
     public class ForwardObserver_Test

@@ -63,5 +63,13 @@ namespace ArmaOps.Test.Domain.Coordinates
         {
             Assert.That(other.GetHashCode(), Is.Not.EqualTo(sut.GetHashCode()));
         }
+
+        [Test, AutoData]
+        public void AddAndSubtractBalanced(Cartesian a, Cartesian b)
+        {
+            var result = a.Add(b).Subtract(a);
+
+            Assert.That(result, Is.EqualTo(b));
+        }
     }
 }
