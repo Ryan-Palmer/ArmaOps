@@ -22,13 +22,13 @@ namespace ArmaOps.Domain.Coordinates
             Z = z;
         }
 
-        public Polar ToPolar(ForwardObserver fO)
+        public Polar ToPolar(Cartesian origin)
         {
-            var diff = Subtract(fO.Location);
+            var diff = Subtract(origin);
             var azimuth = Math.Atan2(diff.X, diff.Y);
             var elevation = 0.0;
             var dist = Math.Sqrt(Math.Pow(diff.X, 2) + Math.Pow(diff.Y, 2));
-            return new Polar(fO, azimuth, elevation, dist);
+            return new Polar(origin, azimuth, elevation, dist);
         }
 
         public static Cartesian Subtract(Cartesian a, Cartesian b)

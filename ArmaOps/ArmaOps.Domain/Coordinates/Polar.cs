@@ -6,18 +6,18 @@ namespace ArmaOps.Domain.Coordinates
 {
     public class Polar
     {
-        public ForwardObserver ForwardObserver { get; }
+        public Cartesian Origin { get; }
         public double Azimuth { get; }
         public double Elevation { get; }
         public double Distance { get; }
 
         public Polar (
-            ForwardObserver fo,
+            Cartesian origin,
             double azimuth,
             double elevation,
             double distance)
         {
-            ForwardObserver = fo;
+            Origin = origin;
             Azimuth = azimuth;
             Elevation = elevation;
             Distance = distance;
@@ -28,7 +28,7 @@ namespace ArmaOps.Domain.Coordinates
             var dx = Distance * Math.Sin(Azimuth);
             var dy = Distance * Math.Cos(Azimuth);
             var dz = 0.0;
-            return new Cartesian(dx, dy, dz).Add(ForwardObserver.Location);
+            return new Cartesian(dx, dy, dz).Add(Origin);
         }
 
         public override bool Equals(object obj)
@@ -39,7 +39,7 @@ namespace ArmaOps.Domain.Coordinates
                 if (other != null)
                 {
                     return
-                        other.ForwardObserver.Equals(this.ForwardObserver)
+                        other.Origin.Equals(this.Origin)
                         && other.Azimuth == this.Azimuth
                         && other.Elevation == this.Elevation
                         && other.Distance == this.Distance;
@@ -50,7 +50,7 @@ namespace ArmaOps.Domain.Coordinates
 
         public override int GetHashCode()
         {
-            return (ForwardObserver.GetHashCode(), Azimuth, Elevation, Distance).GetHashCode();
+            return (Origin.GetHashCode(), Azimuth, Elevation, Distance).GetHashCode();
         }
     }
 }

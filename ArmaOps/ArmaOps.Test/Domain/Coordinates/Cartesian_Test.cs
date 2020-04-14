@@ -12,14 +12,13 @@ namespace ArmaOps.Test.Domain.Coordinates
     public class Cartesian_Test
     {
         [Test, AutoData]
-        public void Origin2DCartesianConvertsToPolar(
-            string foName)
+        public void Origin2DCartesianConvertsToPolar()
         {
-            var originFO = new ForwardObserver(new Cartesian(0, 0, 0), foName);
+            var origin = new Cartesian(0, 0, 0);
             var originTarget = new Cartesian(0, 1, 0);
-            var expectedResult = new Polar(originFO, 0, 1, 0);
+            var expectedResult = new Polar(origin, 0, 1, 0);
 
-            var result = originTarget.ToPolar(originFO);
+            var result = originTarget.ToPolar(origin);
 
             Assert.That(result, Is.EqualTo(expectedResult));
         }

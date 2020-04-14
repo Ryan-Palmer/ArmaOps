@@ -12,10 +12,9 @@ namespace ArmaOps.Test.Domain.Coordinates
     public class Polar_Test
     {
         [Test, AutoData]
-        public void OriginPolarConvertsToCartesian(
-            string foName)
+        public void OriginPolarConvertsToCartesian()
         {
-            var originFO = new ForwardObserver(new Cartesian(0, 0, 0), foName);
+            var originFO = new Cartesian(0, 0, 0);
             var originPolar = new Polar(originFO, 0, 0, 1);
             var expectedResult = new Cartesian(0, 1, 0);
 
@@ -27,17 +26,17 @@ namespace ArmaOps.Test.Domain.Coordinates
         [Test, AutoData]
         public void EqualsTrueIfAllValuesMatch(Polar sut)
         {
-            var sameValues = new Polar(sut.ForwardObserver, sut.Azimuth, sut.Elevation, sut.Distance);
+            var sameValues = new Polar(sut.Origin, sut.Azimuth, sut.Elevation, sut.Distance);
 
             Assert.That(sameValues, Is.EqualTo(sut));
         }
 
         [Test, AutoData]
-        public void EqualsFalseIfFOMismatch(
+        public void EqualsFalseIfOriginMismatch(
             Polar sut,
-            ForwardObserver fo)
+            Cartesian origin)
         {
-            var other = new Polar(fo, sut.Azimuth, sut.Elevation, sut.Distance);
+            var other = new Polar(origin, sut.Azimuth, sut.Elevation, sut.Distance);
 
             Assert.That(other, Is.Not.EqualTo(sut));
         }
@@ -47,7 +46,7 @@ namespace ArmaOps.Test.Domain.Coordinates
             Polar sut,
             double azimuth)
         {
-            var other = new Polar(sut.ForwardObserver, azimuth, sut.Elevation, sut.Distance);
+            var other = new Polar(sut.Origin, azimuth, sut.Elevation, sut.Distance);
 
             Assert.That(other, Is.Not.EqualTo(sut));
         }
@@ -57,7 +56,7 @@ namespace ArmaOps.Test.Domain.Coordinates
             Polar sut,
             double elevation)
         {
-            var other = new Polar(sut.ForwardObserver, sut.Azimuth, elevation, sut.Distance);
+            var other = new Polar(sut.Origin, sut.Azimuth, elevation, sut.Distance);
 
             Assert.That(other, Is.Not.EqualTo(sut));
         }
@@ -67,7 +66,7 @@ namespace ArmaOps.Test.Domain.Coordinates
             Polar sut,
             double distance)
         {
-            var other = new Polar(sut.ForwardObserver, sut.Azimuth, sut.Elevation, distance);
+            var other = new Polar(sut.Origin, sut.Azimuth, sut.Elevation, distance);
 
             Assert.That(other, Is.Not.EqualTo(sut));
         }
@@ -75,7 +74,7 @@ namespace ArmaOps.Test.Domain.Coordinates
         [Test, AutoData]
         public void GetHashCodeMatchCorrectlyImplemented(Polar sut)
         {
-            var sameValues = new Polar(sut.ForwardObserver, sut.Azimuth, sut.Elevation, sut.Distance);
+            var sameValues = new Polar(sut.Origin, sut.Azimuth, sut.Elevation, sut.Distance);
 
             Assert.That(sameValues.GetHashCode(), Is.EqualTo(sut.GetHashCode()));
         }
