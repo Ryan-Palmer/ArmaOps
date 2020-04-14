@@ -6,13 +6,13 @@ namespace ArmaOps.Domain.Coordinates
 {
     public class Polar
     {
-        public Cartesian FO { get; }
+        public ForwardObserver FO { get; }
         public double Azimuth { get; }
         public double Elevation { get; }
         public double Distance { get; }
 
         public Polar (
-            Cartesian fo,
+            ForwardObserver fo,
             double azimuth,
             double elevation,
             double distance)
@@ -42,16 +42,7 @@ namespace ArmaOps.Domain.Coordinates
 
         public override int GetHashCode()
         {
-            (FO.GetHashCode(), Azimuth, Elevation, Distance).GetHashCode();
-            //unchecked
-            //{
-            //    int hash = 17; // multiply 2 primes by the hash code of internal values
-            //    hash = hash * 23 + FO.GetHashCode();
-            //    hash = hash * 23 + Azimuth.GetHashCode();
-            //    hash = hash * 23 + Elevation.GetHashCode();
-            //    hash = hash * 23 + Distance.GetHashCode();
-            //    return hash;
-            //}
+            return (FO.GetHashCode(), Azimuth, Elevation, Distance).GetHashCode();
         }
     }
 }

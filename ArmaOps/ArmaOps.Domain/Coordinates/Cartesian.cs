@@ -72,15 +72,7 @@ namespace ArmaOps.Domain.Coordinates
 
         public override int GetHashCode()
         {
-            (X, Y, Z).GetHashCode();
-            //unchecked
-            //{
-            //    int hash = 17; // multiply 2 primes by the hash code of internal values
-            //    hash = hash * 23 + X.GetHashCode();
-            //    hash = hash * 23 + Y.GetHashCode();
-            //    hash = hash * 23 + Z.GetHashCode();
-            //    return hash;
-            //}
+            return (X, Y, Z).GetHashCode();
         }
     }
 }
