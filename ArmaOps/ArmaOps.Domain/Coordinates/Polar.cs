@@ -6,7 +6,7 @@ namespace ArmaOps.Domain.Coordinates
 {
     public class Polar
     {
-        public ForwardObserver FO { get; }
+        public ForwardObserver ForwardObserver { get; }
         public double Azimuth { get; }
         public double Elevation { get; }
         public double Distance { get; }
@@ -17,7 +17,7 @@ namespace ArmaOps.Domain.Coordinates
             double elevation,
             double distance)
         {
-            FO = fo;
+            ForwardObserver = fo;
             Azimuth = azimuth;
             Elevation = elevation;
             Distance = distance;
@@ -31,7 +31,7 @@ namespace ArmaOps.Domain.Coordinates
                 if (other != null)
                 {
                     return
-                        other.FO.Equals(this.FO)
+                        other.ForwardObserver.Equals(this.ForwardObserver)
                         && other.Azimuth == this.Azimuth
                         && other.Elevation == this.Elevation
                         && other.Distance == this.Distance;
@@ -42,7 +42,7 @@ namespace ArmaOps.Domain.Coordinates
 
         public override int GetHashCode()
         {
-            return (FO.GetHashCode(), Azimuth, Elevation, Distance).GetHashCode();
+            return (ForwardObserver.GetHashCode(), Azimuth, Elevation, Distance).GetHashCode();
         }
     }
 }

@@ -26,7 +26,7 @@ namespace ArmaOps.Domain.Coordinates
             var dx = pol.Distance * Math.Sin(pol.Azimuth);
             var dy = pol.Distance * Math.Cos(pol.Azimuth);
             var dz = 0.0;
-            return new Cartesian(dx, dy, dz).Add(pol.FO.Location);
+            return new Cartesian(dx, dy, dz).Add(pol.ForwardObserver.Location);
         }
     }
 }
