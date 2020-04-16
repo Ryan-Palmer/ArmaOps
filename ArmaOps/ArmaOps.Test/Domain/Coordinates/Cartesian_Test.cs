@@ -12,17 +12,45 @@ namespace ArmaOps.Test.Domain.Coordinates
     public class Cartesian_Test
     {
         [Test, AutoData]
-        public void GreaterThanSquareRootOfMax2DCartesianThrowsException()
+        public void XGreaterThanSquareRootOfMaxThrowsException()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new Cartesian(Math.Sqrt(double.MaxValue) + double.MinValue, 0, 0));
+        }
+
+        [Test, AutoData]
+        public void XLessThanNegativeSquareRootOfMinThrowsException()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new Cartesian(-Math.Sqrt(double.MaxValue) - double.MinValue, 0, 0));
+        }
+
+        [Test, AutoData]
+        public void YGreaterThanSquareRootOfMaxThrowsException()
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
                 new Cartesian(0, Math.Sqrt(double.MaxValue) + double.MinValue, 0));
         }
 
         [Test, AutoData]
-        public void LessThanNegativeSquareRootOfMin2DCartesianThrowsException()
+        public void YLessThanNegativeSquareRootOfMinThrowsException()
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
                 new Cartesian(0, -Math.Sqrt(double.MaxValue) - double.MinValue, 0));
+        }
+
+        [Test, AutoData]
+        public void ZGreaterThanSquareRootOfMaxThrowsException()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new Cartesian(0, 0, Math.Sqrt(double.MaxValue) + double.MinValue));
+        }
+
+        [Test, AutoData]
+        public void ZLessThanNegativeSquareRootOfMinThrowsException()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new Cartesian(0, 0, -Math.Sqrt(double.MaxValue) - double.MinValue));
         }
 
         [Test, AutoData]
