@@ -25,9 +25,9 @@ namespace ArmaOps.Domain.Coordinates
 
         public Cartesian ToCartesian()
         {
-            var dx = Distance * Math.Sin(Azimuth);
-            var dy = 0.0d;
-            var dz = Distance * Math.Cos(Azimuth);
+            var dx = Distance * Math.Sin(Azimuth) * Math.Cos(Elevation);
+            var dy = Distance * Math.Sin(Elevation);
+            var dz = Distance * Math.Cos(Azimuth) * Math.Cos(Elevation);
             return new Cartesian(dx, dy, dz).Add(Origin);
         }
 

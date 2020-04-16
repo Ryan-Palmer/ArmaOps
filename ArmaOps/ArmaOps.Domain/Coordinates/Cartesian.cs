@@ -31,8 +31,8 @@ namespace ArmaOps.Domain.Coordinates
         {
             var diff = Subtract(origin);
             var azimuth = Math.Atan2(diff.X, diff.Z);
-            var elevation = 0.0d;
-            var dist = Math.Sqrt(Math.Pow(diff.X, 2.0d) + Math.Pow(diff.Z, 2.0d));
+            var dist = Math.Sqrt(Math.Pow(diff.X, 2.0d) + Math.Pow(diff.Y, 2.0d) + Math.Pow(diff.Z, 2.0d));
+            var elevation = Math.Asin(diff.Y/dist);
             return new Polar(origin, azimuth, elevation, dist);
         }
 

@@ -186,5 +186,31 @@ namespace ArmaOps.Test.Domain.Coordinates
 
             Assert.That(result, Is.EqualTo(b));
         }
+
+        [Test, AutoData]
+        public void Origin3DCartesianConvertsToPolarDirectlyUp()
+        {
+            var origin = new Cartesian(0, 0, 0);
+            var target = new Cartesian(0, 1, 0);
+            var expectedResult = new Polar(origin, 0, Math.PI / 2, 1);
+
+            var result = target.ToPolar(origin);
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test, AutoData]
+        public void Origin3DCartesianConvertsToPolarDirectlyDown()
+        {
+            var origin = new Cartesian(0, 0, 0);
+            var target = new Cartesian(0, -1, 0);
+            var expectedResult = new Polar(origin, 0, -Math.PI / 2, 1);
+
+            var result = target.ToPolar(origin);
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+
     }
 }
