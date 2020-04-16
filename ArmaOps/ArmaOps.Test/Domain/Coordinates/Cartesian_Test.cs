@@ -12,6 +12,20 @@ namespace ArmaOps.Test.Domain.Coordinates
     public class Cartesian_Test
     {
         [Test, AutoData]
+        public void GreaterThanSquareRootOfMax2DCartesianThrowsException()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new Cartesian(0, Math.Sqrt(double.MaxValue) + double.MinValue, 0));
+        }
+
+        [Test, AutoData]
+        public void LessThanNegativeSquareRootOfMin2DCartesianThrowsException()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new Cartesian(0, -Math.Sqrt(double.MaxValue) - double.MinValue, 0));
+        }
+
+        [Test, AutoData]
         public void Origin2DCartesianConvertsToPolar()
         {
             var origin = new Cartesian(0, 0, 0);
@@ -82,29 +96,6 @@ namespace ArmaOps.Test.Domain.Coordinates
 
             Assert.That(result, Is.EqualTo(expectedResult));
         }
-
-
-        [Test, AutoData]
-        public void GreaterThanSquareRootOfMax2DCartesianThrowsException()
-        {
-            var origin = new Cartesian(0, 0, 0);
-            var target = new Cartesian(0, double.MaxValue, 0);
-            var expectedResult = new Polar(origin, 0, 0, double.MaxValue);
-
-            Assert.Throws<System.ArgumentOutOfRangeException>(() => target.ToPolar(origin));
-        }
-
-
-        [Test, AutoData]
-        public void LessThanNegativeSquareRootOfMin2DCartesianThrowsException()
-        {
-            var origin = new Cartesian(0, 0, 0);
-            var target = new Cartesian(0, double.MaxValue, 0);
-            var expectedResult = new Polar(origin, Math.PI, 0, double.MaxValue);
-
-            Assert.Throws<System.ArgumentOutOfRangeException>(() => target.ToPolar(origin));
-        }
-
 
         [Test, AutoData]
         public void EqualsTrueIfAllValuesMatch(Cartesian sut)
