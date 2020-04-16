@@ -12,11 +12,6 @@ namespace ArmaOps.Domain.Coordinates
 
         public Cartesian (double x, double y, double z)
         {
-            //if (x < 0 || y < 0 || z < 0)
-            //{
-            //    throw new ArgumentOutOfRangeException("Co-ordinates must be greater than zero");
-            //}
-
             if (    x >  Math.Sqrt(double.MaxValue) 
                 ||  x < -Math.Sqrt(double.MaxValue) 
                 ||  y >  Math.Sqrt(double.MaxValue)
