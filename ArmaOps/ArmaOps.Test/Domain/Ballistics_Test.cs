@@ -108,5 +108,77 @@ namespace ArmaOps.Test.Domain
 
             Assert.That(result, Is.Not.Null);
         }
+
+        [Test]
+        public void MaxValuesThrowsOutOfRange()
+        {
+            var sut = new Ballistics(EARTH_G);
+            Assert.Throws<ArgumentOutOfRangeException>(()=> 
+            {
+                sut.GetSolutions(double.MaxValue, double.MaxValue, double.MaxValue);
+            });
+        }
+
+        [Test]
+        public void MinValuesThrowsOutOfRange()
+        {
+            var sut = new Ballistics(EARTH_G);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                sut.GetSolutions(double.MinValue, double.MinValue, double.MinValue);
+            });
+        }
+
+        [Test]
+        public void SpecificViableTestIF()
+        {
+            var sut = new Ballistics(EARTH_G);
+            var result = sut.GetSolutions(96.8, 100, 0);
+            var expectedResult = new BallisticsSolution(1.5183716229444228, 0.05242470385047386);
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void SpecificViableTestFoW()
+        {
+            var sut = new Ballistics(EARTH_G);
+            var result = sut.GetSolutions(115.5, 1259, 0);
+            var expectedResult = new BallisticsSolution(0.9796026004110153, 0.5911937263838813);
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void SpecificViableTestWespe()
+        {
+            var sut = new Ballistics(EARTH_G);
+            var result = sut.GetSolutions(299, 7943, 0);
+            var expectedResult = new BallisticsSolution(1.0418836824930422, 0.5289126443018544);
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void SpecificViableTestSholef()
+        {
+            var sut = new Ballistics(EARTH_G);
+            var result = sut.GetSolutions(810, 63096, 0);
+            var expectedResult = new BallisticsSolution(0.9548968782908429, 0.6158994485040538);
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void SpecificViableTestSholef2()
+        {
+            var sut = new Ballistics(EARTH_G);
+            var result = sut.GetSolutions(810, 100, 0);
+            var expectedResult = new BallisticsSolution(1.5700489823617692, 0.0007473444331481063);
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+
     }
 }

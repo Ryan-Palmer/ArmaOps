@@ -15,6 +15,30 @@ namespace ArmaOps.Domain
             PositiveSolution = posSolution;
             NegativeSolution = negSolution;
         }
+
+        public override string ToString()
+        {
+            return $"Pos:{PositiveSolution} Neg:{NegativeSolution}";
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj != null)
+            {
+                var other = obj as BallisticsSolution;
+                if (other != null)
+                {
+                    return
+                        other.PositiveSolution == this.PositiveSolution
+                        && other.NegativeSolution == this.NegativeSolution;
+                }
+            }
+            return false;
+        }
+        public override int GetHashCode()
+        {
+            return (PositiveSolution, NegativeSolution).GetHashCode();
+        }
     }
  
     public class Ballistics
@@ -32,6 +56,16 @@ namespace ArmaOps.Domain
 
         public BallisticsSolution? GetSolutions(double v, double x, double y)
         {
+            if (   v >   1000 
+                || v <      0
+                || x > 100000
+                || x <      0 
+                || y >   1000
+                || y <  -1000)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
             var viable = ViableSolution(v, x, y);
             if(viable < 0)
             {
