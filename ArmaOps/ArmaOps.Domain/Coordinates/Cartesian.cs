@@ -17,6 +17,16 @@ namespace ArmaOps.Domain.Coordinates
             //    throw new ArgumentOutOfRangeException("Co-ordinates must be greater than zero");
             //}
 
+            if (    x >  Math.Sqrt(double.MaxValue) 
+                ||  x < -Math.Sqrt(double.MaxValue) 
+                ||  y >  Math.Sqrt(double.MaxValue)
+                ||  y < -Math.Sqrt(double.MaxValue)
+                ||  z >  Math.Sqrt(double.MaxValue)
+                ||  z < -Math.Sqrt(double.MaxValue))
+            {
+                throw new ArgumentOutOfRangeException("Co-ordinates out of range!");
+            }
+
             X = x;
             Y = y;
             Z = z;
@@ -26,8 +36,8 @@ namespace ArmaOps.Domain.Coordinates
         {
             var diff = Subtract(origin);
             var azimuth = Math.Atan2(diff.X, diff.Y);
-            var elevation = 0.0;
-            var dist = Math.Sqrt(Math.Pow(diff.X, 2) + Math.Pow(diff.Y, 2));
+            var elevation = 0.0d;
+            var dist = Math.Sqrt(Math.Pow(diff.X, 2.0d) + Math.Pow(diff.Y, 2.0d));
             return new Polar(origin, azimuth, elevation, dist);
         }
 
@@ -76,6 +86,11 @@ namespace ArmaOps.Domain.Coordinates
         public override int GetHashCode()
         {
             return (X, Y, Z).GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return $"X:{X} Y:{Y} Z:{Z}";
         }
     }
 }

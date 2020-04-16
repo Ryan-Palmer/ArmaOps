@@ -27,7 +27,7 @@ namespace ArmaOps.Domain.Coordinates
         {
             var dx = Distance * Math.Sin(Azimuth);
             var dy = Distance * Math.Cos(Azimuth);
-            var dz = 0.0;
+            var dz = 0.0d;
             return new Cartesian(dx, dy, dz).Add(Origin);
         }
 
@@ -51,6 +51,11 @@ namespace ArmaOps.Domain.Coordinates
         public override int GetHashCode()
         {
             return (Origin.GetHashCode(), Azimuth, Elevation, Distance).GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return $"Origin:{Origin} Azimuth:{Azimuth} Elevation:{Elevation} Distance:{Distance}";
         }
     }
 }

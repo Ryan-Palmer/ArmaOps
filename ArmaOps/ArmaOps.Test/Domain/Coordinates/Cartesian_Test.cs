@@ -15,13 +15,96 @@ namespace ArmaOps.Test.Domain.Coordinates
         public void Origin2DCartesianConvertsToPolar()
         {
             var origin = new Cartesian(0, 0, 0);
-            var originTarget = new Cartesian(0, 1, 0);
-            var expectedResult = new Polar(origin, 0, 1, 0);
+            var target = new Cartesian(0, 1, 0);
+            var expectedResult = new Polar(origin, 0, 0, 1);
 
-            var result = originTarget.ToPolar(origin);
+            var result = target.ToPolar(origin);
 
             Assert.That(result, Is.EqualTo(expectedResult));
         }
+
+        [Test, AutoData]
+        public void NearOrigin2DCartesianConvertsToPolar()
+        {
+            var origin = new Cartesian(0, 0, 0);
+            var target = new Cartesian(0, 2, 0);
+            var expectedResult = new Polar(origin, 0, 0, 2);
+
+            var result = target.ToPolar(origin);
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test, AutoData]
+        public void RealWorldMax2DCartesianConvertsToPolar()
+        {
+            var origin = new Cartesian(0, 0, 0);
+            var target = new Cartesian(0, 10000, 0);
+            var expectedResult = new Polar(origin, 0, 0, 10000);
+
+            var result = target.ToPolar(origin);
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test, AutoData]
+        public void RealWorldMin2DCartesianConvertsToPolar()
+        {
+            var origin = new Cartesian(0, 0, 0);
+            var target = new Cartesian(0, -10000, 0);
+            var expectedResult = new Polar(origin, Math.PI, 0, 10000);
+
+            var result = target.ToPolar(origin);
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test, AutoData]
+        public void SquareRootOfMax2DCartesianConvertsToPolar()
+        {
+            var origin = new Cartesian(0, 0, 0);
+            var target = new Cartesian(0, Math.Sqrt(double.MaxValue), 0);
+            var expectedResult = new Polar(origin, 0, 0, Math.Sqrt(double.MaxValue));
+
+            var result = target.ToPolar(origin);
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test, AutoData]
+        public void NegativeSquareRootOfMin2DCartesianConvertsToPolar()
+        {
+            var origin = new Cartesian(0, 0, 0);
+            var target = new Cartesian(0, -Math.Sqrt(double.MaxValue), 0);
+            var expectedResult = new Polar(origin, Math.PI, 0, Math.Sqrt(double.MaxValue));
+
+            var result = target.ToPolar(origin);
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+
+        [Test, AutoData]
+        public void GreaterThanSquareRootOfMax2DCartesianThrowsException()
+        {
+            var origin = new Cartesian(0, 0, 0);
+            var target = new Cartesian(0, double.MaxValue, 0);
+            var expectedResult = new Polar(origin, 0, 0, double.MaxValue);
+
+            Assert.Throws<System.ArgumentOutOfRangeException>(() => target.ToPolar(origin));
+        }
+
+
+        [Test, AutoData]
+        public void LessThanNegativeSquareRootOfMin2DCartesianThrowsException()
+        {
+            var origin = new Cartesian(0, 0, 0);
+            var target = new Cartesian(0, double.MaxValue, 0);
+            var expectedResult = new Polar(origin, Math.PI, 0, double.MaxValue);
+
+            Assert.Throws<System.ArgumentOutOfRangeException>(() => target.ToPolar(origin));
+        }
+
 
         [Test, AutoData]
         public void EqualsTrueIfAllValuesMatch(Cartesian sut)
