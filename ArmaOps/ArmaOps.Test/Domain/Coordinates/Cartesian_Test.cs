@@ -57,7 +57,7 @@ namespace ArmaOps.Test.Domain.Coordinates
         public void Origin2DCartesianConvertsToPolar()
         {
             var origin = new Cartesian(0, 0, 0);
-            var target = new Cartesian(0, 1, 0);
+            var target = new Cartesian(0, 0, 1);
             var expectedResult = new Polar(origin, 0, 0, 1);
 
             var result = target.ToPolar(origin);
@@ -69,7 +69,7 @@ namespace ArmaOps.Test.Domain.Coordinates
         public void NearOrigin2DCartesianConvertsToPolar()
         {
             var origin = new Cartesian(0, 0, 0);
-            var target = new Cartesian(0, 2, 0);
+            var target = new Cartesian(0, 0, 2);
             var expectedResult = new Polar(origin, 0, 0, 2);
 
             var result = target.ToPolar(origin);
@@ -81,7 +81,7 @@ namespace ArmaOps.Test.Domain.Coordinates
         public void RealWorldMax2DCartesianConvertsToPolar()
         {
             var origin = new Cartesian(0, 0, 0);
-            var target = new Cartesian(0, 10000, 0);
+            var target = new Cartesian(0, 0, 10000);
             var expectedResult = new Polar(origin, 0, 0, 10000);
 
             var result = target.ToPolar(origin);
@@ -93,7 +93,7 @@ namespace ArmaOps.Test.Domain.Coordinates
         public void RealWorldMin2DCartesianConvertsToPolar()
         {
             var origin = new Cartesian(0, 0, 0);
-            var target = new Cartesian(0, -10000, 0);
+            var target = new Cartesian(0, 0, -10000);
             var expectedResult = new Polar(origin, Math.PI, 0, 10000);
 
             var result = target.ToPolar(origin);
@@ -105,7 +105,7 @@ namespace ArmaOps.Test.Domain.Coordinates
         public void SquareRootOfMax2DCartesianConvertsToPolar()
         {
             var origin = new Cartesian(0, 0, 0);
-            var target = new Cartesian(0, Math.Sqrt(double.MaxValue), 0);
+            var target = new Cartesian(0, 0, Math.Sqrt(double.MaxValue));
             var expectedResult = new Polar(origin, 0, 0, Math.Sqrt(double.MaxValue));
 
             var result = target.ToPolar(origin);
@@ -117,7 +117,7 @@ namespace ArmaOps.Test.Domain.Coordinates
         public void NegativeSquareRootOfMin2DCartesianConvertsToPolar()
         {
             var origin = new Cartesian(0, 0, 0);
-            var target = new Cartesian(0, -Math.Sqrt(double.MaxValue), 0);
+            var target = new Cartesian(0, 0, -Math.Sqrt(double.MaxValue));
             var expectedResult = new Polar(origin, Math.PI, 0, Math.Sqrt(double.MaxValue));
 
             var result = target.ToPolar(origin);

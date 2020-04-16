@@ -30,9 +30,9 @@ namespace ArmaOps.Domain.Coordinates
         public Polar ToPolar(Cartesian origin)
         {
             var diff = Subtract(origin);
-            var azimuth = Math.Atan2(diff.X, diff.Y);
+            var azimuth = Math.Atan2(diff.X, diff.Z);
             var elevation = 0.0d;
-            var dist = Math.Sqrt(Math.Pow(diff.X, 2.0d) + Math.Pow(diff.Y, 2.0d));
+            var dist = Math.Sqrt(Math.Pow(diff.X, 2.0d) + Math.Pow(diff.Z, 2.0d));
             return new Polar(origin, azimuth, elevation, dist);
         }
 

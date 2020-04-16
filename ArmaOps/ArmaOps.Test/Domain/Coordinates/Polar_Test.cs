@@ -16,7 +16,7 @@ namespace ArmaOps.Test.Domain.Coordinates
         {
             var originFO = new Cartesian(0, 0, 0);
             var originPolar = new Polar(originFO, 0, 0, 1);
-            var expectedResult = new Cartesian(0, 1, 0);
+            var expectedResult = new Cartesian(0, 0, 1);
 
             var result = originPolar.ToCartesian();
 
