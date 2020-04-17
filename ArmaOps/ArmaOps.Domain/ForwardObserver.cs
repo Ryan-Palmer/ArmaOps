@@ -5,35 +5,12 @@ using System.Text;
 
 namespace ArmaOps.Domain
 {
-    public class ForwardObserver
+    public class ForwardObserver : BattlefieldEntity
     {
-        public Cartesian Location { get; }
-        public string Name { get; }
-
-        public ForwardObserver (Cartesian location, string name)
+        public ForwardObserver (string name, Cartesian location) 
+            : base (name,location)
         {
-            Location = location;
-            Name = name;
-        }
 
-        public override bool Equals(object obj)
-        {
-            if (obj != null)
-            {
-                var other = obj as ForwardObserver;
-                if (other != null)
-                {
-                    return
-                        other.Location.Equals(this.Location)
-                        && other.Name.Equals(this.Name);
-                }
-            }
-            return false;
-        }
-
-        public override int GetHashCode()
-        {
-            return (Location, Name).GetHashCode();
         }
     }
 }
