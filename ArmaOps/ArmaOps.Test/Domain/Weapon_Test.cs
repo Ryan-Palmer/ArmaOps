@@ -4,6 +4,7 @@ using AutoFixture.NUnit3;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ArmaOps.Test.Domain
@@ -11,6 +12,64 @@ namespace ArmaOps.Test.Domain
     [TestFixture]
     public class Weapon_Test
     {
+        [Test, AutoData]
+        public void EditNameReturnsNewWeapon(string name, string name2)
+        {
+            var charges = new List<int> { 0, 1, 2 };
+            var sut = new Weapon(name, 1, 2, charges);
+            var result = sut.EditName(name2);
+
+            Assert.That(result.Name, Is.EqualTo(name2));
+            Assert.That(result.MinElevation, Is.EqualTo(sut.MinElevation));
+            Assert.That(result.MaxElevation, Is.EqualTo(sut.MaxElevation));
+            Assert.That(result.ChargeVelocity.SequenceEqual(sut.ChargeVelocity), Is.True);
+            Assert.That(result == sut, Is.False);
+        }
+
+        [Test, AutoData]
+        public void EditMinElevationReturnsNewWeapon(string name)
+        {
+            var charges = new List<int> { 0, 1, 2 };
+            var sut = new Weapon(name, 2, 3, charges);
+            var result = sut.EditMinElevation(1);
+
+            Assert.That(result.Name, Is.EqualTo(sut.Name));
+            Assert.That(result.MinElevation, Is.EqualTo(1));
+            Assert.That(result.MaxElevation, Is.EqualTo(sut.MaxElevation));
+            Assert.That(result.ChargeVelocity.SequenceEqual(sut.ChargeVelocity), Is.True);
+            Assert.That(result == sut, Is.False);
+        }
+
+        [Test, AutoData]
+        public void EditMaxElevationReturnsNewWeapon(string name)
+        {
+            var charges = new List<int> { 0, 1, 2 };
+            var sut = new Weapon(name, 1, 2, charges);
+            var result = sut.EditMaxElevation(3);
+
+            Assert.That(result.Name, Is.EqualTo(sut.Name));
+            Assert.That(result.MinElevation, Is.EqualTo(sut.MinElevation));
+            Assert.That(result.MaxElevation, Is.EqualTo(3));
+            Assert.That(result.ChargeVelocity.SequenceEqual(sut.ChargeVelocity), Is.True);
+            Assert.That(result == sut, Is.False);
+        }
+
+        [Test, AutoData]
+        public void EditChargeVelocitiesReturnsNewWeapon(string name)
+        {
+            var charges = new List<int> { 0, 1, 2 };
+            var newCharges = new List<int> { 1, 2, 3 };
+            var sut = new Weapon(name, 1, 2, charges);
+            var result = sut.EditChargeVelocities(newCharges);
+
+            Assert.That(result.Name, Is.EqualTo(sut.Name));
+            Assert.That(result.MinElevation, Is.EqualTo(sut.MinElevation));
+            Assert.That(result.MaxElevation, Is.EqualTo(sut.MaxElevation));
+            Assert.That(result.ChargeVelocity.SequenceEqual(sut.ChargeVelocity), Is.False);
+            Assert.That(result == sut, Is.False);
+        }
+
+
         [Test, AutoData]
         public void EqualsTrueIfAllValuesMatch(string name)
         {
