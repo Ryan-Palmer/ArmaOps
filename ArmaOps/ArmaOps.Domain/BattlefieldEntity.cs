@@ -21,6 +21,7 @@ namespace ArmaOps.Domain
             Name = name;
             Location = location;
         }
+
         public override bool Equals(object obj)
         {
             if (obj != null)
