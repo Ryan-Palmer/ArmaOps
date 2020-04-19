@@ -51,30 +51,36 @@ namespace ArmaOps.Domain
 
         public BatterySolutionSet GetSolutionSet(Battery battery)
         {
-            var ballistics = new Ballistics(GRAVITY);
-            var vdist = Target.DY(battery.Location);
-            var hdist = Target.ToPolar(battery.Location).Distance;
-            var solutions = new List<FireSolution>();
-            foreach (var cv in battery.Weapon.ChargeVelocities)
-            {
-                var ballisticSolutions = ballistics?.GetSolutions(cv, hdist, vdist);
-                if (ballisticSolutions != null)
-                {
-                    var directSolution = new Mils(ballisticSolutions.NegativeSolution);
-                    var indirectSolution = new Mils(ballisticSolutions.PositiveSolution);
-                    solutions.Add(new FireSolution(cv, directSolution, indirectSolution));
-                }
-            }
-            return new BatterySolutionSet(battery, Target, solutions);
+            // *** Needs testing ***
+            //var ballistics = new Ballistics(GRAVITY);
+            //var vdist = Target.DY(battery.Location);
+            //var hdist = Target.ToPolar(battery.Location).Distance;
+            //var solutions = new List<FireSolution>();
+            //foreach (var cv in battery.Weapon.ChargeVelocities)
+            //{
+            //    var ballisticSolutions = ballistics?.GetSolutions(cv, hdist, vdist);
+            //    if (ballisticSolutions != null)
+            //    {
+            //        var directSolution = new Mils(ballisticSolutions.NegativeSolution);
+            //        var indirectSolution = new Mils(ballisticSolutions.PositiveSolution);
+            //        solutions.Add(new FireSolution(cv, directSolution, indirectSolution));
+            //    }
+            //}
+            //return new BatterySolutionSet(battery, Target, solutions);
+            throw new NotImplementedException();
         }
 
         public IEnumerable<BatterySolutionSet> GetSolutionSets(IEnumerable<Battery> batteries)
         {
-            return batteries.Select(b => GetSolutionSet(b));
+            // *** Needs testing ***
+            //return batteries.Select(b => GetSolutionSet(b));
+            throw new NotImplementedException();
         }
 
         public FireSalvo ApplyCorrection(Cartesian delta)
         {
+            // *** Probably wrong, didn't really think about it ***
+            //return new FireSalvo(Name, Target.Add(delta));
             throw new NotImplementedException();
         }
 
@@ -82,7 +88,33 @@ namespace ArmaOps.Domain
             ForwardObserver observer, Mils deltaAzimuth,
             Mils deltaElevation, int deltaDistanceMetres)
         {
+            // *** Probably wrong, didn't really think about it ***
+            //var delta =
+            //    GetCartesianTarget(
+            //        observer, deltaAzimuth,
+            //        deltaElevation, deltaDistanceMetres);
+            //return new FireSalvo(Name, Target.Add(delta));
             throw new NotImplementedException();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj != null)
+            {
+                var other = obj as FireSalvo;
+                if (other != null)
+                {
+                    return
+                        Name.Equals(other.Name)
+                        && Target.Equals(other.Target);
+                }
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return (Name, Target).GetHashCode();
         }
     }
 }
