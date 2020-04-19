@@ -22,7 +22,7 @@ namespace ArmaOps.Domain
                 if (other != null)
                 {
                     return
-                        base.Equals((BattlefieldEntity)other)
+                        base.Equals(other)
                         && Weapon.Equals(other.Weapon);
                 }
             }

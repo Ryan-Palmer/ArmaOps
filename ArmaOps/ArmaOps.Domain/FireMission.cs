@@ -1,14 +1,21 @@
 ﻿using ArmaOps.Domain.Coordinates;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ArmaOps.Domain
 {
-    public abstract class FireMission
+    public class FireMission
     {
         public string Name { get; }
         public Cartesian Target { get; }
+
+        public FireMission(Cartesian target)
+        {
+            Name = Guid.NewGuid().ToString();
+            Target = target;
+        }
 
         public FireMission(string name, Cartesian target)
         {
@@ -16,32 +23,23 @@ namespace ArmaOps.Domain
             Target = target;
         }
 
-        public FireMission(Cartesian target)
-        {
-            Name = Guid.NewGuid().ToString();
-            Target = target;
-        }
-    }
-
-    public class PolarFireMission : FireMission
-    {
-        public PolarFireMission(
+        public FireMission(
             ForwardObserver fo, Mils observedAzimuth,
             Mils observedElevation, int observedDistanceMetres)
-            : base(fo.Name, GetCartesianTarget(fo, observedAzimuth, observedElevation, observedDistanceMetres))
         {
-            
+            Name = $"Fire Mission for {fo.Name}";
+            Target = GetCartesianTarget(fo, observedAzimuth, observedElevation, observedDistanceMetres);
         }
 
-        public PolarFireMission(
+        public FireMission(
             string name, ForwardObserver fo, Mils observedAzimuth,
             Mils observedElevation, int observedDistanceMetres)
-            : base(name, GetCartesianTarget(fo, observedAzimuth, observedElevation, observedDistanceMetres))
         {
-
+            Name = name;
+            Target = GetCartesianTarget(fo, observedAzimuth, observedElevation, observedDistanceMetres);
         }
 
-        static Cartesian GetCartesianTarget (ForwardObserver fo, Mils observedAzimuth,
+        Cartesian GetCartesianTarget(ForwardObserver fo, Mils observedAzimuth,
             Mils observedElevation, int observedDistanceMetres)
         {
             return new Polar(fo.Location,
@@ -50,18 +48,22 @@ namespace ArmaOps.Domain
                 observedDistanceMetres).ToCartesian();
         }
 
-
-    }
-
-    public class GridFireMission : FireMission
-    {
-        public GridFireMission(Cartesian target) : base(target)
+        public IEnumerable<FireSolution> GetSolutions(Battery battery)
         {
-            
+            throw new NotImplementedException();
         }
-        public GridFireMission(string name, Cartesian target) : base(name, target)
-        {
 
+        public IEnumerable<FireSolution> GetSolutions(IEnumerable<Battery> batteries)
+        {
+            return
+                batteries
+                .Select(b => GetSolutions(b))
+                .SelectMany(s => s);
+        }
+
+        public FireMission ApplyCorrection(/* Some correction params, maybe multiple overrides?*/)
+        {
+            throw new NotImplementedException();
         }
     }
 }
