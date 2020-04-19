@@ -21,5 +21,24 @@ namespace ArmaOps.Domain
         {
             Value = (int)Math.Round(radians * MultiplicandRadiansToMils);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj != null)
+            {
+                var other = obj as Mils;
+                if (other != null)
+                {
+                    return
+                        Value.Equals(other.Value);
+                }
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Value.GetHashCode();
+        }
     }
 }

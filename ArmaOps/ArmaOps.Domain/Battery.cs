@@ -31,7 +31,7 @@ namespace ArmaOps.Domain
 
         public override int GetHashCode()
         {
-            return (base.GetHashCode(), Weapon.GetHashCode()).GetHashCode();
+            return (base.GetHashCode(), Weapon).GetHashCode();
         }
     }
 }
