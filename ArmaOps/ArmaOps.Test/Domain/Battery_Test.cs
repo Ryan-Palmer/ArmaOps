@@ -14,7 +14,7 @@ namespace ArmaOps.Test.Domain
         [Test, AutoData]
         public void EqualsTrueIfAllValuesMatch(string name, Cartesian loc)
         {
-            var charges = new List<int> { 0, 1, 2 };
+            var charges = new List<double> { 0, 1, 2 };
             var weapon = new Weapon(name, 1, 2, charges);
             var sut = new Battery(name, loc, weapon);
             var sameValues = new Battery(name, loc, weapon);
@@ -28,7 +28,7 @@ namespace ArmaOps.Test.Domain
             string name2,
             Cartesian loc)
         {
-            var charges = new List<int> { 0, 1, 2 };
+            var charges = new List<double> { 0, 1, 2 };
             var weapon = new Weapon(name, 1, 2, charges);
             var sut = new Battery(name, loc, weapon);
             var other = new Battery(name2, loc, weapon);
@@ -42,7 +42,7 @@ namespace ArmaOps.Test.Domain
             Cartesian loc,
             Cartesian loc2)
         {
-            var charges = new List<int> { 0, 1, 2 };
+            var charges = new List<double> { 0, 1, 2 };
             var weapon = new Weapon(name, 1, 2, charges);
             var sut = new Battery(name, loc, weapon);
             var other = new Battery(name, loc2, weapon);
@@ -56,7 +56,7 @@ namespace ArmaOps.Test.Domain
             string name2,
             Cartesian loc)
         {
-            var charges = new List<int> { 0, 1, 2 };
+            var charges = new List<double> { 0, 1, 2 };
             var weapon = new Weapon(name, 1, 2, charges);
             var weapon2 = new Weapon(name2, 1, 2, charges);
             var sut = new Battery(name, loc, weapon);
@@ -68,7 +68,7 @@ namespace ArmaOps.Test.Domain
         [Test, AutoData]
         public void HashCodeMatchIfAllValuesMatch(string name, Cartesian loc)
         {
-            var charges = new List<int> { 0, 1, 2 };
+            var charges = new List<double> { 0, 1, 2 };
             var weapon = new Weapon(name, 1, 2, charges);
             var sut = new Battery(name, loc, weapon);
             var sameValues = new Battery(name, loc, weapon);
@@ -82,7 +82,7 @@ namespace ArmaOps.Test.Domain
             string name2,
             Cartesian loc)
         {
-            var charges = new List<int> { 0, 1, 2 };
+            var charges = new List<double> { 0, 1, 2 };
             var weapon = new Weapon(name, 1, 2, charges);
             var sut = new Battery(name, loc, weapon);
             var other = new Battery(name2, loc, weapon);
@@ -96,7 +96,7 @@ namespace ArmaOps.Test.Domain
             Cartesian loc,
             string name2)
         {
-            var charges = new List<int> { 0, 1, 2 };
+            var charges = new List<double> { 0, 1, 2 };
             var weapon = new Weapon(name, 1, 2, charges);
             var weapon2 = new Weapon(name2, 1, 2, charges);
             var sut = new Battery(name, loc, weapon);

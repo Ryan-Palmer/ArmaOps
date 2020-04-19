@@ -64,7 +64,7 @@ namespace ArmaOps.Domain
         }
         public Weapon EditChargeVelocities(IEnumerable<double> chargeVelocities)
         {
-            return new Weapon(Name, MinElevation, MaxElevation, ChargeVelocities);
+            return new Weapon(Name, MinElevation, MaxElevation, chargeVelocities);
         }
 
         public override bool Equals(object obj)

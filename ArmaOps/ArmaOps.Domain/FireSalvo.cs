@@ -12,7 +12,7 @@ namespace ArmaOps.Domain
         public Battery Battery { get; }
         public IEnumerable<FireSolution> FireSolutions { get; }
 
-        public BatterySolutions (Battery battery, Cartesian target, IEnumerable<FireSolution> fireSolutions)
+        public BatterySolutionSet(Battery battery, Cartesian target, IEnumerable<FireSolution> fireSolutions)
         {
             Battery = battery;
             Target = target;
@@ -22,6 +22,7 @@ namespace ArmaOps.Domain
 
     public class FireSalvo
     {
+        const double GRAVITY = 9.80665;
         public string Name { get; }
         public Cartesian Target { get; }
 
@@ -70,20 +71,20 @@ namespace ArmaOps.Domain
             var solutions = new List<FireSolution>();
             foreach (var cv in battery.Weapon.ChargeVelocities)
             {
-                var ballisticSolutions = ballistics.GetSolutions(cv, hdist, vdist);
-                if (ballistics != null)
+                var ballisticSolutions = ballistics?.GetSolutions(cv, hdist, vdist);
+                if (ballisticSolutions != null)
                 {
-                    var directSolution = new Mils(ballistics.NegativeSolution);
-                    var indirectSolution = new Mils(ballistics.PositiveSolution);
+                    var directSolution = new Mils(ballisticSolutions.NegativeSolution);
+                    var indirectSolution = new Mils(ballisticSolutions.PositiveSolution);
                     solutions.Add(new FireSolution(cv, directSolution, indirectSolution));
                 }
             }
-            return new BatterySolutions (battery, Target, solutions);
+            return new BatterySolutionSet(battery, Target, solutions);
         }
 
         public IEnumerable<BatterySolutionSet> GetSolutionSets(IEnumerable<Battery> batteries)
         {
-            return batteries.Select(b => GetSolutions(b));
+            return batteries.Select(b => GetSolutionSet(b));
         }
 
         public FireSalvo ApplyCorrection(Cartesian delta)
