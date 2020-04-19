@@ -6,20 +6,6 @@ using System.Text;
 
 namespace ArmaOps.Domain
 {
-    public class BatterySolutionSet
-    {
-        public Cartesian Target { get; }
-        public Battery Battery { get; }
-        public IEnumerable<FireSolution> FireSolutions { get; }
-
-        public BatterySolutionSet(Battery battery, Cartesian target, IEnumerable<FireSolution> fireSolutions)
-        {
-            Battery = battery;
-            Target = target;
-            FireSolutions = fireSolutions;
-        }
-    }
-
     public class FireSalvo
     {
         const double GRAVITY = 9.80665;
