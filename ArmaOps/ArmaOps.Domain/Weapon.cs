@@ -8,38 +8,30 @@ namespace ArmaOps.Domain
     public class Weapon
     {
         public string Name { get; }
-        public int MinElevation { get; }
-        public int MaxElevation { get; }
+        public Mils MinElevation { get; }
+        public Mils MaxElevation { get; }
         public IEnumerable<double> ChargeVelocities { get; }
 
-        public Weapon (string name, int minElevation, int maxElevation, IEnumerable<double> chargeVelocities)
+        public Weapon(string name, Mils minElevation, Mils maxElevation, IEnumerable<double> chargeVelocities)
         {
-            if(string.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException("Must specify a name!");
             }
-            if(minElevation < -6400 || minElevation > 6400)
-            {
-                throw new ArgumentOutOfRangeException("Minimum elevation must be ±6400");
-            }
-            if (maxElevation < -6400 || maxElevation > 6400)
-            {
-                throw new ArgumentOutOfRangeException("Maximum elevation must be ±6400");
-            }
-            if (minElevation > maxElevation)
+            if (minElevation.Value > maxElevation.Value)
             {
                 throw new ArgumentException("Minimum elevation cannot be greater than maximum elevation!");
             }
             int count = 0;
-            foreach(var cv in chargeVelocities)
+            foreach (var cv in chargeVelocities)
             {
                 ++count;
-                if(cv < 0)
+                if (cv < 0)
                 {
                     throw new ArgumentOutOfRangeException("Velocity cannot be negative!");
                 }
             }
-            if(count == 0)
+            if (count == 0)
             {
                 throw new ArgumentException("Must specify at least one velocity!");
             }
@@ -50,22 +42,15 @@ namespace ArmaOps.Domain
             ChargeVelocities = chargeVelocities;
         }
 
-        public Weapon EditName(string name)
-        {
-            return new Weapon(name, MinElevation, MaxElevation, ChargeVelocities);
-        }
-        public Weapon EditMinElevation(int minElevation)
-        {
-            return new Weapon(Name, minElevation, MaxElevation, ChargeVelocities);
-        }
-        public Weapon EditMaxElevation(int maxElevation)
-        {
-            return new Weapon(Name, MinElevation, maxElevation, ChargeVelocities);
-        }
-        public Weapon EditChargeVelocities(IEnumerable<double> chargeVelocities)
-        {
-            return new Weapon(Name, MinElevation, MaxElevation, chargeVelocities);
-        }
+        public bool ElevationIsAllowed(Mils elevation) => (elevation.Value >= MinElevation.Value && elevation.Value <= MaxElevation.Value);
+
+        public Weapon EditName(string name) => new Weapon(name, MinElevation, MaxElevation, ChargeVelocities);
+
+        public Weapon EditMinElevation(Mils minElevation) => new Weapon(Name, minElevation, MaxElevation, ChargeVelocities);
+
+        public Weapon EditMaxElevation(Mils maxElevation) => new Weapon(Name, MinElevation, maxElevation, ChargeVelocities);
+
+        public Weapon EditChargeVelocities(IEnumerable<double> chargeVelocities) => new Weapon(Name, MinElevation, MaxElevation, chargeVelocities);
 
         public override bool Equals(object obj)
         {
@@ -84,9 +69,6 @@ namespace ArmaOps.Domain
             return false;
         }
 
-        public override int GetHashCode()
-        {
-            return (Name, MinElevation, MaxElevation, ChargeVelocities).GetHashCode();
-        }
+        public override int GetHashCode() => (Name, MinElevation, MaxElevation, ChargeVelocities).GetHashCode();
     }
 }

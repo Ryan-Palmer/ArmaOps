@@ -17,7 +17,7 @@ namespace ArmaOps.Test.Domain
             IEnumerable<FireSolution> fireSolutions)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var weapon = new Weapon(name, 1, 2, charges);
+            var weapon = new Weapon(name, new Mils(1), new Mils(2), charges);
             var battery = new Battery(name, batteryLoc, weapon);
 
             var sut = new BatterySolutionSet(battery, target, fireSolutions);
@@ -36,7 +36,7 @@ namespace ArmaOps.Test.Domain
             IEnumerable<FireSolution> fireSolutions)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var weapon = new Weapon(name, 1, 2, charges);
+            var weapon = new Weapon(name, new Mils(1), new Mils(2), charges);
             var battery = new Battery(name, batteryLoc, weapon);
             var battery2 = new Battery(name2, batteryLoc, weapon);
 
@@ -56,7 +56,7 @@ namespace ArmaOps.Test.Domain
             IEnumerable<FireSolution> fireSolutions)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var weapon = new Weapon(name, 1, 2, charges);
+            var weapon = new Weapon(name, new Mils(1), new Mils(2), charges);
             var battery = new Battery(name, batteryLoc, weapon);
 
             var sut = new BatterySolutionSet(battery, target, fireSolutions);
@@ -75,7 +75,7 @@ namespace ArmaOps.Test.Domain
             IEnumerable<FireSolution> fireSolutions2)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var weapon = new Weapon(name, 1, 2, charges);
+            var weapon = new Weapon(name, new Mils(1), new Mils(2), charges);
             var battery = new Battery(name, batteryLoc, weapon);
 
             var sut = new BatterySolutionSet(battery, target, fireSolutions);

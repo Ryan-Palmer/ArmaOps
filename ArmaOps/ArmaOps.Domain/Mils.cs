@@ -6,20 +6,60 @@ namespace ArmaOps.Domain
 {
     public class Mils
     {
-        const double MultiplicandMilsToRadians = Math.PI / 3200.0;
-        const double MultiplicandRadiansToMils = 3200.0 / Math.PI;
+        const int FULL_CIRCLE = 6400;
+        const int HALF_CIRCLE = FULL_CIRCLE / 2;
+        const double MultiplicandMilsToRadians = Math.PI / HALF_CIRCLE;
+        const double MultiplicandRadiansToMils = HALF_CIRCLE / Math.PI;
 
         public int Value { get; }
         public double Radians => MultiplicandMilsToRadians * Value;
 
+        public int Unsigned
+        {
+            get
+            {
+                if (Value < 0)
+                {
+                    return Value + FULL_CIRCLE;
+                }
+                return Value;
+            }
+        }
+
         public Mils (int milliRadians)
         {
-            Value = milliRadians;
+            Value = Validate(milliRadians);
         }
 
         public Mils(double radians)
         {
-            Value = (int)Math.Round(radians * MultiplicandRadiansToMils);
+            var milliRadians = (int)Math.Round(radians * MultiplicandRadiansToMils);
+            Value = Validate(milliRadians);
+        }
+
+        public Mils Add(Mils b)
+        {
+            var result = Value + b.Value;
+            return new Mils(result);
+        }
+
+        public Mils Sub(Mils b)
+        {
+            var result = Value - b.Value;
+            return new Mils(result);
+        }
+
+        static int Validate(int milliRadians)
+        {
+            while (milliRadians > HALF_CIRCLE)
+            {
+                milliRadians -= FULL_CIRCLE;
+            }
+            while (milliRadians < -HALF_CIRCLE)
+            {
+                milliRadians += FULL_CIRCLE;
+            }
+            return milliRadians;
         }
 
         public override bool Equals(object obj)
@@ -34,6 +74,11 @@ namespace ArmaOps.Domain
                 }
             }
             return false;
+        }
+
+        public override string ToString()
+        {
+            return $"Mils:{Value}";
         }
 
         public override int GetHashCode()

@@ -16,7 +16,7 @@ namespace ArmaOps.Test.Domain
         public void EditNameReturnsNewWeapon(string name, string name2)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var sut = new Weapon(name, 1, 2, charges);
+            var sut = new Weapon(name, new Mils(1), new Mils(2), charges);
             var result = sut.EditName(name2);
 
             Assert.That(result.Name, Is.EqualTo(name2));
@@ -30,11 +30,11 @@ namespace ArmaOps.Test.Domain
         public void EditMinElevationReturnsNewWeapon(string name)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var sut = new Weapon(name, 2, 3, charges);
-            var result = sut.EditMinElevation(1);
+            var sut = new Weapon(name, new Mils(2), new Mils(3), charges);
+            var result = sut.EditMinElevation(new Mils(1));
 
             Assert.That(result.Name, Is.EqualTo(sut.Name));
-            Assert.That(result.MinElevation, Is.EqualTo(1));
+            Assert.That(result.MinElevation, Is.EqualTo(new Mils(1)));
             Assert.That(result.MaxElevation, Is.EqualTo(sut.MaxElevation));
             Assert.That(result.ChargeVelocities.SequenceEqual(sut.ChargeVelocities), Is.True);
             Assert.That(result == sut, Is.False);
@@ -44,12 +44,12 @@ namespace ArmaOps.Test.Domain
         public void EditMaxElevationReturnsNewWeapon(string name)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var sut = new Weapon(name, 1, 2, charges);
-            var result = sut.EditMaxElevation(3);
+            var sut = new Weapon(name, new Mils(1), new Mils(2), charges);
+            var result = sut.EditMaxElevation(new Mils(3));
 
             Assert.That(result.Name, Is.EqualTo(sut.Name));
             Assert.That(result.MinElevation, Is.EqualTo(sut.MinElevation));
-            Assert.That(result.MaxElevation, Is.EqualTo(3));
+            Assert.That(result.MaxElevation, Is.EqualTo(new Mils(3)));
             Assert.That(result.ChargeVelocities.SequenceEqual(sut.ChargeVelocities), Is.True);
             Assert.That(result == sut, Is.False);
         }
@@ -59,7 +59,7 @@ namespace ArmaOps.Test.Domain
         {
             var charges = new List<double> { 0, 1, 2 };
             var newCharges = new List<double> { 1, 2, 3 };
-            var sut = new Weapon(name, 1, 2, charges);
+            var sut = new Weapon(name, new Mils(1), new Mils(2), charges);
             var result = sut.EditChargeVelocities(newCharges);
 
             Assert.That(result.Name, Is.EqualTo(sut.Name));
@@ -74,7 +74,7 @@ namespace ArmaOps.Test.Domain
         public void EqualsTrueIfAllValuesMatch(string name)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var sut = new Weapon(name, 1, 2, charges);
+            var sut = new Weapon(name, new Mils(1), new Mils(2), charges);
             var sameValues = new Weapon(sut.Name, sut.MinElevation, sut.MaxElevation,sut.ChargeVelocities);
 
             Assert.That(sameValues, Is.EqualTo(sut));
@@ -87,7 +87,7 @@ namespace ArmaOps.Test.Domain
             string name2)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var sut = new Weapon(name, 1, 2, charges);
+            var sut = new Weapon(name, new Mils(1), new Mils(2), charges);
             var other = new Weapon(name2, sut.MinElevation, sut.MaxElevation, sut.ChargeVelocities);
 
             Assert.That(other, Is.Not.EqualTo(sut));
@@ -98,8 +98,8 @@ namespace ArmaOps.Test.Domain
         public void EqualsFalseIfMaxElevationMismatch(string name)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var sut = new Weapon(name, 1, 2, charges);
-            var other = new Weapon(sut.Name, sut.MinElevation, 3, sut.ChargeVelocities);
+            var sut = new Weapon(name, new Mils(1), new Mils(2), charges);
+            var other = new Weapon(sut.Name, sut.MinElevation, new Mils(3), sut.ChargeVelocities);
 
             Assert.That(other, Is.Not.EqualTo(sut));
             Assert.That(other.GetHashCode(), Is.Not.EqualTo(sut.GetHashCode()));
@@ -109,8 +109,8 @@ namespace ArmaOps.Test.Domain
         public void EqualsFalseIfMinElevationMismatch(string name)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var sut = new Weapon(name, 1, 2, charges);
-            var other = new Weapon(sut.Name, 0, sut.MaxElevation, sut.ChargeVelocities);
+            var sut = new Weapon(name, new Mils(1), new Mils(2), charges);
+            var other = new Weapon(sut.Name, new Mils(0), sut.MaxElevation, sut.ChargeVelocities);
 
             Assert.That(other, Is.Not.EqualTo(sut));
             Assert.That(other.GetHashCode(), Is.Not.EqualTo(sut.GetHashCode()));
@@ -123,7 +123,7 @@ namespace ArmaOps.Test.Domain
             IEnumerable<double> chargeVelocities)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var sut = new Weapon(name, 1, 2, charges);
+            var sut = new Weapon(name, new Mils(1), new Mils(2), charges);
             var other = new Weapon(sut.Name, sut.MinElevation, sut.MaxElevation, chargeVelocities);
 
             Assert.That(other, Is.Not.EqualTo(sut));
@@ -136,51 +136,14 @@ namespace ArmaOps.Test.Domain
             var charges = new List<double> { 0, 1, 2 };
 
             Assert.Throws<ArgumentException>(() =>
-                new Weapon(string.Empty, -1, 1, charges));
+                new Weapon(string.Empty, new Mils(-1), new Mils(1), charges));
         }
-
-        [Test, AutoData]
-        public void MinElevationLessThanNeg6400ThrowsArgumentOutOfRangeException(string name)
-        {
-            var charges = new List<double> { 0, 1, 2 };
-
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                new Weapon(name, -6401, 1, charges));
-        }
-
-        [Test, AutoData]
-        public void MinElevationGreaterThanThan6400ThrowsArgumentOutOfRangeException(string name)
-        {
-            var charges = new List<double> { 0, 1, 2 };
-
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                new Weapon(name, 6401, 1, charges));
-        }
-
-        [Test, AutoData]
-        public void MaxElevationLessThanNeg6400ThrowsArgumentOutOfRangeException(string name)
-        {
-            var charges = new List<double> { 0, 1, 2 };
-
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                new Weapon(name, 1, -6401, charges));
-        }
-
-        [Test, AutoData]
-        public void MaxElevationGreaterThanThan6400ThrowsArgumentOutOfRangeException(string name)
-        {
-            var charges = new List<double> { 0, 1, 2 };
-
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                new Weapon(name, 1, 6401, charges));
-        }
-
 
         [Test, AutoData]
         public void EmptyChargeCollectionThrowsArgumentException(string name)
         {
             Assert.Throws<ArgumentException>(() =>
-                new Weapon(name, -1, 1, new List<double>()));
+                new Weapon(name, new Mils(-1), new Mils(1), new List<double>()));
         }
 
         [Test, AutoData]
@@ -189,7 +152,7 @@ namespace ArmaOps.Test.Domain
             var charges = new List<double> { -1 };
 
             Assert.Throws<ArgumentOutOfRangeException>(() =>
-                new Weapon(name, -1, 1, charges));
+                new Weapon(name, new Mils(-1), new Mils(1), charges));
         }
 
         [Test, AutoData]
@@ -198,43 +161,46 @@ namespace ArmaOps.Test.Domain
             var charges = new List<double> { 0, 1, 2 };
 
             Assert.Throws<ArgumentException>(() =>
-                new Weapon(name, 2, 1, charges));
+                new Weapon(name, new Mils(2), new Mils(1), charges));
         }
 
         [Test, AutoData]
-        public void MinElevationNeg6400DoesntThrowArgumentOutOfRangeException(string name)
+        public void ValidElevationReturnsAllowed(string name)
         {
             var charges = new List<double> { 0, 1, 2 };
+            var minElev = new Mils(1);
+            var maxElev = new Mils(3);
+            var inRangeElev = new Mils(2);
 
-            Assert.DoesNotThrow(() =>
-                new Weapon(name, -6400, 1, charges));
+            var sut = new Weapon(name, minElev, maxElev, charges);
+
+            Assert.That(sut.ElevationIsAllowed(inRangeElev), Is.True);
         }
 
         [Test, AutoData]
-        public void MinElevation6400DoesntThrowArgumentOutOfRangeException(string name)
+        public void GreaterInvalidElevationReturnsNotAllowed(string name)
         {
             var charges = new List<double> { 0, 1, 2 };
+            var minElev = new Mils(1);
+            var maxElev = new Mils(2);
+            var outOfRangeElev = new Mils(3);
 
-            Assert.DoesNotThrow(() =>
-                new Weapon(name, 6400, 6400, charges));
+            var sut = new Weapon(name, minElev, maxElev, charges);
+
+            Assert.That(sut.ElevationIsAllowed(outOfRangeElev), Is.False);
         }
 
         [Test, AutoData]
-        public void MaxElevationNeg6400DoesntThrowArgumentOutOfRangeException(string name)
+        public void LesserInvalidElevationReturnsNotAllowed(string name)
         {
             var charges = new List<double> { 0, 1, 2 };
+            var minElev = new Mils(1);
+            var maxElev = new Mils(2);
+            var outOfRangeElev = new Mils(0);
 
-            Assert.DoesNotThrow(() =>
-                new Weapon(name, -6400, -6400, charges));
-        }
+            var sut = new Weapon(name, minElev, maxElev, charges);
 
-        [Test, AutoData]
-        public void MaxElevation6400DoesntThrowArgumentOutOfRangeException(string name)
-        {
-            var charges = new List<double> { 0, 1, 2 };
-
-            Assert.DoesNotThrow(() =>
-                new Weapon(name, 1, 6400, charges));
+            Assert.That(sut.ElevationIsAllowed(outOfRangeElev), Is.False);
         }
     }
 }

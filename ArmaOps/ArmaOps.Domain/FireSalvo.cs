@@ -8,7 +8,7 @@ namespace ArmaOps.Domain
 {
     public class FireSalvo
     {
-        const double GRAVITY = 9.80665;
+        const double EARTH_G = 9.80665;
         public string Name { get; }
         public Cartesian Target { get; }
 
@@ -51,23 +51,30 @@ namespace ArmaOps.Domain
 
         public BatterySolutionSet GetSolutionSet(Battery battery)
         {
-            // *** Needs testing ***
-            //var ballistics = new Ballistics(GRAVITY);
-            //var vdist = Target.DY(battery.Location);
-            //var hdist = Target.ToPolar(battery.Location).Distance;
-            //var solutions = new List<FireSolution>();
-            //foreach (var cv in battery.Weapon.ChargeVelocities)
-            //{
-            //    var ballisticSolutions = ballistics?.GetSolutions(cv, hdist, vdist);
-            //    if (ballisticSolutions != null)
-            //    {
-            //        var directSolution = new Mils(ballisticSolutions.NegativeSolution);
-            //        var indirectSolution = new Mils(ballisticSolutions.PositiveSolution);
-            //        solutions.Add(new FireSolution(cv, directSolution, indirectSolution));
-            //    }
-            //}
-            //return new BatterySolutionSet(battery, Target, solutions);
-            throw new NotImplementedException();
+            var ballistics = new Ballistics(EARTH_G);
+            var vdist = Target.DY(battery.Location);
+            var hdist = Target.ToPolar(battery.Location).Distance;
+            var solutions = new List<FireSolution>();
+            foreach (var cv in battery.Weapon.ChargeVelocities)
+            {
+                var ballisticSolutions = ballistics?.GetSolutions(cv, hdist, vdist);
+                if (ballisticSolutions != null)
+                {
+                    var directSolution = new Mils(ballisticSolutions.NegativeSolution);
+                    var indirectSolution = new Mils(ballisticSolutions.PositiveSolution);
+
+                    if (battery.Weapon.ElevationIsAllowed(directSolution))
+                    {
+                        solutions.Add(new FireSolution(cv, directSolution, SolutionType.Direct));
+                    }
+
+                    if (battery.Weapon.ElevationIsAllowed(indirectSolution))
+                    {
+                        solutions.Add(new FireSolution(cv, indirectSolution, SolutionType.Indirect));
+                    }
+                }
+            }
+            return new BatterySolutionSet(battery, Target, solutions);
         }
 
         public IEnumerable<BatterySolutionSet> GetSolutionSets(IEnumerable<Battery> batteries)
@@ -112,9 +119,6 @@ namespace ArmaOps.Domain
             return false;
         }
 
-        public override int GetHashCode()
-        {
-            return (Name, Target).GetHashCode();
-        }
+        public override int GetHashCode() => (Name, Target).GetHashCode();
     }
 }

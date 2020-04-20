@@ -5,20 +5,21 @@ using System.Text;
 
 namespace ArmaOps.Domain
 {
+    public enum SolutionType { Direct, Indirect }
     public class FireSolution
     {
         public double ChargeVelocity { get; }
-        public Mils DirectSolution { get; }
-        public Mils IndirectSolution { get; }
+        public Mils Elevation { get; }
+        public SolutionType SolutionType { get; }
 
         public FireSolution(
             double chargeVelocity,
-            Mils directSolution,
-            Mils indirectSolution)
+            Mils elevation,
+            SolutionType solutionType)
         {
             ChargeVelocity = chargeVelocity;
-            DirectSolution = directSolution;
-            IndirectSolution = indirectSolution;
+            Elevation = elevation;
+            SolutionType = solutionType;
         }
 
         public override bool Equals(object obj)
@@ -30,16 +31,13 @@ namespace ArmaOps.Domain
                 {
                     return
                         ChargeVelocity.Equals(other.ChargeVelocity)
-                        && DirectSolution.Equals(other.DirectSolution)
-                        && IndirectSolution.Equals(other.IndirectSolution);
+                        && Elevation.Equals(other.Elevation)
+                        && SolutionType.Equals(other.SolutionType);
                 }
             }
             return false;
         }
 
-        public override int GetHashCode()
-        {
-            return (ChargeVelocity, DirectSolution, IndirectSolution).GetHashCode();
-        }
+        public override int GetHashCode() => (ChargeVelocity, Elevation, SolutionType).GetHashCode();
     }
 }

@@ -13,11 +13,11 @@ namespace ArmaOps.Test.Domain
         [Test, AutoData]
         public void EqualsTrueIfAllValuesMatch(
             double chargeVelocity,
-            Mils directSolution,
-            Mils indirectSolution)
+            Mils elevation,
+            SolutionType sType)
         {
-            var sut = new FireSolution(chargeVelocity, directSolution, indirectSolution);
-            var sameValues = new FireSolution(chargeVelocity, directSolution, indirectSolution);
+            var sut = new FireSolution(chargeVelocity, elevation, sType);
+            var sameValues = new FireSolution(chargeVelocity, elevation, sType);
 
             Assert.That(sameValues, Is.EqualTo(sut));
             Assert.That(sameValues.GetHashCode(), Is.EqualTo(sut.GetHashCode()));
@@ -27,39 +27,39 @@ namespace ArmaOps.Test.Domain
         public void EqualsFalseIfChargeVelocityMismatch(
             double chargeVelocity,
             double chargeVelocity2,
-            Mils directSolution,
-            Mils indirectSolution)
+            Mils elevation,
+            SolutionType sType)
         {
-            var sut = new FireSolution(chargeVelocity, directSolution, indirectSolution);
-            var other = new FireSolution(chargeVelocity2, directSolution, indirectSolution);
+            var sut = new FireSolution(chargeVelocity, elevation, sType);
+            var other = new FireSolution(chargeVelocity2, elevation, sType);
 
             Assert.That(other, Is.Not.EqualTo(sut));
             Assert.That(other.GetHashCode(), Is.Not.EqualTo(sut.GetHashCode()));
         }
 
         [Test, AutoData]
-        public void EqualsFalseIfDirectSolutionMismatch(
+        public void EqualsFalseIfElevationMismatch(
             double chargeVelocity,
-            Mils directSolution,
-            Mils indirectSolution,
-            Mils otherSolution)
+            Mils elevation,
+            Mils elevation2,
+            SolutionType sType)
         {
-            var sut = new FireSolution(chargeVelocity, directSolution, indirectSolution);
-            var other = new FireSolution(chargeVelocity, otherSolution, indirectSolution);
+            var sut = new FireSolution(chargeVelocity, elevation, sType);
+            var other = new FireSolution(chargeVelocity, elevation2, sType);
 
             Assert.That(other, Is.Not.EqualTo(sut));
             Assert.That(other.GetHashCode(), Is.Not.EqualTo(sut.GetHashCode()));
         }
 
         [Test, AutoData]
-        public void EqualsFalseIfIndirectSolutionMismatch(
+        public void EqualsFalseIfSolutionTypeMismatch(
             double chargeVelocity,
-            Mils directSolution,
-            Mils indirectSolution,
-            Mils otherSolution)
+            Mils elevation,
+            SolutionType sType,
+            SolutionType sType2)
         {
-            var sut = new FireSolution(chargeVelocity, directSolution, indirectSolution);
-            var other = new FireSolution(chargeVelocity, directSolution, otherSolution);
+            var sut = new FireSolution(chargeVelocity, elevation, sType);
+            var other = new FireSolution(chargeVelocity, elevation, sType2);
 
             Assert.That(other, Is.Not.EqualTo(sut));
             Assert.That(other.GetHashCode(), Is.Not.EqualTo(sut.GetHashCode()));
