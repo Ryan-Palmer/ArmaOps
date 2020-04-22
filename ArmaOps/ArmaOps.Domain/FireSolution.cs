@@ -37,6 +37,10 @@ namespace ArmaOps.Domain
             }
             return false;
         }
+        public override string ToString()
+        {
+            return $"ChargeVelocity:{ChargeVelocity} Elevation:{Elevation} SolutionType:{SolutionType}";
+        }
 
         public override int GetHashCode() => (ChargeVelocity, Elevation, SolutionType).GetHashCode();
     }

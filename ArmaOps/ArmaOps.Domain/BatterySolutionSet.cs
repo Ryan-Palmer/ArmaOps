@@ -38,6 +38,16 @@ namespace ArmaOps.Domain
             return false;
         }
 
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+            foreach(var solution in FireSolutions)
+            {
+                builder.Append($"{solution}\n");
+            }
+            return $"Battery:{Battery} \nTarget:{Target} \nFireSolutions:\n{builder}";
+        }
+
         public override int GetHashCode()
         {
             return (Target, Battery, FireSolutions).GetHashCode();

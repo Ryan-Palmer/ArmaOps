@@ -72,6 +72,8 @@ namespace ArmaOps.Domain
                     {
                         solutions.Add(new FireSolution(cv, indirectSolution, SolutionType.Indirect));
                     }
+
+                    //TODO: Do we add disallowed FireSolutions if we mark them disallowed?
                 }
             }
             return new BatterySolutionSet(battery, Target, solutions);

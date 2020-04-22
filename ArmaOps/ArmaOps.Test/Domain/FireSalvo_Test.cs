@@ -167,5 +167,136 @@ namespace ArmaOps.Test.Domain
 
             Assert.That(result.FireSolutions.Count(), Is.EqualTo(0));
         }
+
+        [Test]
+        [AutoData]
+        public void SpecificViableTestIFNearestTriple(string name)
+        {
+            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
+            var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
+            var sut = new FireSalvo(fo, new Mils(0), new Mils(0), 250);
+
+            var result = sut.GetSolutionSet(battery);
+            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 250),
+                new List<FireSolution> {
+                    new FireSolution(96.8, new Mils(1465), SolutionType.Indirect),
+                    new FireSolution(120.4, new Mils(1513), SolutionType.Indirect),
+                    new FireSolution(141.9, new Mils(1538), SolutionType.Indirect),
+                });
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        [AutoData]
+        public void SpecificViableTestIFFurthestTriple(string name)
+        {
+            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
+            var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
+            var sut = new FireSalvo(fo, new Mils(0), new Mils(0), 900);
+
+            var result = sut.GetSolutionSet(battery);
+            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 900),
+                new List<FireSolution> {
+                    new FireSolution(96.8,  new Mils(974),  SolutionType.Indirect),
+                    new FireSolution(120.4, new Mils(1267), SolutionType.Indirect),
+                    new FireSolution(141.9, new Mils(1369), SolutionType.Indirect),
+                });
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        [AutoData]
+        public void SpecificViableTestIFFurthestTriplePlusOne(string name)
+        {
+            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
+            var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
+            var sut = new FireSalvo(fo, new Mils(0), new Mils(0), 950);
+
+            var result = sut.GetSolutionSet(battery);
+            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 950),
+                new List<FireSolution> {
+                    new FireSolution(120.4, new Mils(1245), SolutionType.Indirect),
+                    new FireSolution(141.9, new Mils(1355), SolutionType.Indirect),
+                });
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        [AutoData]
+        public void SpecificViableTestIFFurthestDouble(string name)
+        {
+            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
+            var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
+            var sut = new FireSalvo(fo, new Mils(0), new Mils(0), 1400);
+
+            var result = sut.GetSolutionSet(battery);
+            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 1400),
+                new List<FireSolution> {
+                    new FireSolution(120.4, new Mils(966), SolutionType.Indirect),
+                    new FireSolution(141.9, new Mils(1218), SolutionType.Indirect),
+                });
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        [AutoData]
+        public void SpecificViableTestIFFurthestDoublePlusOne(string name)
+        {
+            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
+            var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
+            var sut = new FireSalvo(fo, new Mils(0), new Mils(0), 1450);
+
+            var result = sut.GetSolutionSet(battery);
+            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 1450),
+                new List<FireSolution> {
+                    new FireSolution(141.9, new Mils(1201), SolutionType.Indirect),
+                });
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        [AutoData]
+        public void SpecificViableTestIFFurthestSingle(string name)
+        {
+            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
+            var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
+            var sut = new FireSalvo(fo, new Mils(0), new Mils(0), 1950);
+
+            var result = sut.GetSolutionSet(battery);
+            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 1950),
+                new List<FireSolution> {
+                    new FireSolution(141.9, new Mils(962), SolutionType.Indirect),
+                });
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        [AutoData]
+        public void SpecificViableTestIFFurthestSinglePlusOne(string name)
+        {
+            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
+            var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
+            var sut = new FireSalvo(fo, new Mils(0), new Mils(0), 2000);
+
+            var result = sut.GetSolutionSet(battery);
+            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 2000),
+                new List<FireSolution> {
+                });
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
     }
 }

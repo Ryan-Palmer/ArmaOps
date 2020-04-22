@@ -37,6 +37,11 @@ namespace ArmaOps.Domain
             return false;
         }
 
+        public override string ToString()
+        {
+            return $"Name:{Name} Location:{Location}";
+        }
+
         public override int GetHashCode()
         {
             return (Name, Location).GetHashCode();
