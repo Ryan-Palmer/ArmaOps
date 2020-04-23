@@ -10,15 +10,18 @@ namespace ArmaOps.Domain
     {
         public Cartesian Target { get; }
         public Battery Battery { get; }
+        public Mils AzimuthToTarget { get; }
         public IEnumerable<FireSolution> FireSolutions { get; }
 
         public BatterySolutionSet(
-            Battery battery, 
+            Battery battery,
             Cartesian target,
+            Mils azToTarget,
             IEnumerable<FireSolution> fireSolutions)
         {
             Battery = battery;
             Target = target;
+            AzimuthToTarget = azToTarget;
             FireSolutions = fireSolutions;
         }
 
@@ -32,6 +35,7 @@ namespace ArmaOps.Domain
                     return
                         Target.Equals(other.Target)
                         && Battery.Equals(other.Battery)
+                        && AzimuthToTarget.Equals(other.AzimuthToTarget)
                         && FireSolutions.SequenceEqual(other.FireSolutions);
                 }
             }
@@ -50,7 +54,7 @@ namespace ArmaOps.Domain
 
         public override int GetHashCode()
         {
-            return (Target, Battery, FireSolutions).GetHashCode();
+            return (Target, Battery, AzimuthToTarget, FireSolutions).GetHashCode();
         }
     }
 }

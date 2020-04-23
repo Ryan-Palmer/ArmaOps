@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+//TODO: HDist and VDist tests
+
 namespace ArmaOps.Test.Domain.Coordinates
 {
     [TestFixture]

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Essentials;
 
 namespace ArmaOps.Domain.Coordinates
 {
@@ -10,6 +11,8 @@ namespace ArmaOps.Domain.Coordinates
         public double Azimuth { get; }
         public double Elevation { get; }
         public double Distance { get; }
+        public double HDist => Distance * Math.Cos(Elevation);
+        public double VDist => Distance * Math.Sin(Elevation);
 
         public Polar (
             Cartesian origin,

@@ -178,7 +178,7 @@ namespace ArmaOps.Test.Domain
             var sut = new FireSalvo(fo, new Mils(0), new Mils(0), 250);
 
             var result = sut.GetSolutionSet(battery);
-            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 250),
+            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 250), new Mils(0),
                 new List<FireSolution> {
                     new FireSolution(96.8, new Mils(1465), SolutionType.Indirect),
                     new FireSolution(120.4, new Mils(1513), SolutionType.Indirect),
@@ -198,7 +198,7 @@ namespace ArmaOps.Test.Domain
             var sut = new FireSalvo(fo, new Mils(0), new Mils(0), 900);
 
             var result = sut.GetSolutionSet(battery);
-            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 900),
+            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 900), new Mils(0),
                 new List<FireSolution> {
                     new FireSolution(96.8,  new Mils(974),  SolutionType.Indirect),
                     new FireSolution(120.4, new Mils(1267), SolutionType.Indirect),
@@ -218,7 +218,7 @@ namespace ArmaOps.Test.Domain
             var sut = new FireSalvo(fo, new Mils(0), new Mils(0), 950);
 
             var result = sut.GetSolutionSet(battery);
-            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 950),
+            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 950), new Mils(0),
                 new List<FireSolution> {
                     new FireSolution(120.4, new Mils(1245), SolutionType.Indirect),
                     new FireSolution(141.9, new Mils(1355), SolutionType.Indirect),
@@ -237,7 +237,7 @@ namespace ArmaOps.Test.Domain
             var sut = new FireSalvo(fo, new Mils(0), new Mils(0), 1400);
 
             var result = sut.GetSolutionSet(battery);
-            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 1400),
+            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 1400), new Mils(0),
                 new List<FireSolution> {
                     new FireSolution(120.4, new Mils(966), SolutionType.Indirect),
                     new FireSolution(141.9, new Mils(1218), SolutionType.Indirect),
@@ -256,7 +256,7 @@ namespace ArmaOps.Test.Domain
             var sut = new FireSalvo(fo, new Mils(0), new Mils(0), 1450);
 
             var result = sut.GetSolutionSet(battery);
-            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 1450),
+            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 1450), new Mils(0),
                 new List<FireSolution> {
                     new FireSolution(141.9, new Mils(1201), SolutionType.Indirect),
                 });
@@ -274,7 +274,7 @@ namespace ArmaOps.Test.Domain
             var sut = new FireSalvo(fo, new Mils(0), new Mils(0), 1950);
 
             var result = sut.GetSolutionSet(battery);
-            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 1950),
+            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 1950), new Mils(0),
                 new List<FireSolution> {
                     new FireSolution(141.9, new Mils(962), SolutionType.Indirect),
                 });
@@ -292,7 +292,7 @@ namespace ArmaOps.Test.Domain
             var sut = new FireSalvo(fo, new Mils(0), new Mils(0), 2000);
 
             var result = sut.GetSolutionSet(battery);
-            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 2000),
+            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 2000), new Mils(0),
                 new List<FireSolution> {
                 });
 

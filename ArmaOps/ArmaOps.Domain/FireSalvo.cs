@@ -52,12 +52,12 @@ namespace ArmaOps.Domain
         public BatterySolutionSet GetSolutionSet(Battery battery)
         {
             var ballistics = new Ballistics(EARTH_G);
-            var vdist = Target.DY(battery.Location);
-            var hdist = Target.ToPolar(battery.Location).Distance;
+            var polarToTarget = Target.ToPolar(battery.Location);
+            var azToTarget = new Mils(polarToTarget.Azimuth);
             var solutions = new List<FireSolution>();
             foreach (var cv in battery.Weapon.ChargeVelocities)
             {
-                var ballisticSolutions = ballistics?.GetSolutions(cv, hdist, vdist);
+                var ballisticSolutions = ballistics?.GetSolutions(cv, polarToTarget.HDist, polarToTarget.VDist);
                 if (ballisticSolutions != null)
                 {
                     var directSolution = new Mils(ballisticSolutions.NegativeSolution);
@@ -76,7 +76,7 @@ namespace ArmaOps.Domain
                     //TODO: Do we add disallowed FireSolutions if we mark them disallowed?
                 }
             }
-            return new BatterySolutionSet(battery, Target, solutions);
+            return new BatterySolutionSet(battery, Target, azToTarget, solutions);
         }
 
         public IEnumerable<BatterySolutionSet> GetSolutionSets(IEnumerable<Battery> batteries)
