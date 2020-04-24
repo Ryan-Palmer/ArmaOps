@@ -49,7 +49,7 @@ namespace ArmaOps.Domain
             {
                 builder.Append($"{solution}\n");
             }
-            return $"Battery:{Battery} \nTarget:{Target} \nFireSolutions:\n{builder}";
+            return $"Battery:{Battery} \nTarget:{Target} \nAzToTarget:{AzimuthToTarget} \nFireSolutions:\n{builder}";
         }
 
         public override int GetHashCode()

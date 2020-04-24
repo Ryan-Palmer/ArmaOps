@@ -81,9 +81,7 @@ namespace ArmaOps.Domain
 
         public IEnumerable<BatterySolutionSet> GetSolutionSets(IEnumerable<Battery> batteries)
         {
-            // *** Needs testing ***
-            //return batteries.Select(b => GetSolutionSet(b));
-            throw new NotImplementedException();
+            return batteries.Select(b => GetSolutionSet(b));
         }
 
         public FireSalvo ApplyCorrection(Cartesian delta)

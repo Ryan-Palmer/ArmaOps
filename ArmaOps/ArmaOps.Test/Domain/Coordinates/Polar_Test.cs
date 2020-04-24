@@ -4,9 +4,8 @@ using AutoFixture.NUnit3;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
-
-//TODO: HDist and VDist tests
 
 namespace ArmaOps.Test.Domain.Coordinates
 {
@@ -87,6 +86,30 @@ namespace ArmaOps.Test.Domain.Coordinates
             Polar other)
         {
             Assert.That(other.GetHashCode(), Is.Not.EqualTo(sut.GetHashCode()));
+        }
+
+        [Test, AutoData]
+        public void OriginPolarToHDist()
+        {
+            var originFO = new Cartesian(0, 0, 0);
+            var originPolar = new Polar(originFO, 0, Math.PI / 4, Math.Sqrt(2));
+            var expectedHDist = Math.Sqrt(Math.Pow(Math.Sqrt(2),2) - Math.Pow(1,2));
+
+            var resultHDist = originPolar.HDist;
+
+            Assert.That(resultHDist, Is.EqualTo(expectedHDist));
+        }
+
+        [Test, AutoData]
+        public void OriginPolarToVDist()
+        {
+            var originFO = new Cartesian(0, 0, 0);
+            var originPolar = new Polar(originFO, 0, Math.PI / 4, Math.Sqrt(2));
+            var expectedVDist = Math.Sqrt(Math.Pow(Math.Sqrt(2), 2) - Math.Pow(1, 2));
+
+            var resultVDist = originPolar.VDist;
+
+            Assert.That(resultVDist, Is.EqualTo(expectedVDist));
         }
     }
 }
