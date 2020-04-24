@@ -12,8 +12,6 @@ namespace ArmaOps.Test.Domain
     [TestFixture]
     public class FireSalvo_Test
     {
-        const double EARTH_G = 9.80665;
-
         [Test, AutoData]
         public void EqualsTrueIfAllValuesMatchCartesianConstructor(
             string name,
@@ -168,8 +166,8 @@ namespace ArmaOps.Test.Domain
             Assert.That(result.FireSolutions.Count(), Is.EqualTo(0));
         }
 
-        [Test]
-        [AutoData]
+
+        [Test, AutoData]
         public void SolutionIsViableForIronFrontIfNearestTriple(string name)
         {
             var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
@@ -188,8 +186,7 @@ namespace ArmaOps.Test.Domain
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 
-        [Test]
-        [AutoData]
+        [Test, AutoData]
         public void SolutionIsViableForIronFrontIfFurthestTriple(string name)
         {
             var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
@@ -208,8 +205,7 @@ namespace ArmaOps.Test.Domain
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 
-        [Test]
-        [AutoData]
+        [Test, AutoData]
         public void SolutionIsViableForIronFrontIfFurthestTriplePlusOne(string name)
         {
             var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
@@ -227,8 +223,7 @@ namespace ArmaOps.Test.Domain
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 
-        [Test]
-        [AutoData]
+        [Test, AutoData]
         public void SolutionIsViableForIronFrontIfFurthestDouble(string name)
         {
             var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
@@ -246,8 +241,7 @@ namespace ArmaOps.Test.Domain
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 
-        [Test]
-        [AutoData]
+        [Test, AutoData]
         public void SolutionIsViableForIronFrontIfFurthestDoublePlusOne(string name)
         {
             var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
@@ -264,8 +258,7 @@ namespace ArmaOps.Test.Domain
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 
-        [Test]
-        [AutoData]
+        [Test, AutoData]
         public void SolutionIsViableForIronFrontIfFurthestSingle(string name)
         {
             var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
@@ -282,8 +275,7 @@ namespace ArmaOps.Test.Domain
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 
-        [Test]
-        [AutoData]
+        [Test, AutoData]
         public void SolutionIsViableForIronFrontIfFurthestSinglePlusOne(string name)
         {
             var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
@@ -299,8 +291,7 @@ namespace ArmaOps.Test.Domain
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 
-        [Test]
-        [AutoData]
+        [Test, AutoData]
         public void MultipleSolutionSetsCalculatedCorrectly(string name)
         {
             var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
@@ -331,6 +322,98 @@ namespace ArmaOps.Test.Domain
             Assert.That(result[0], Is.EqualTo(expectedResult1));
             Assert.That(result[1], Is.EqualTo(expectedResult2));
             Assert.That(result[2], Is.EqualTo(expectedResult3));
+        }
+
+        [Test, AutoData]
+        public void CartesianCorrectionIsCorrect(string name)
+        {
+            var sut = new FireSalvo(name, new Cartesian(0, 0, 1000));
+            var actualResult = sut.ApplyCorrection(new Cartesian(10, 20, 50));
+            var expectedResult = new FireSalvo(name, new Cartesian(10,20, 1050));
+
+            Assert.That(actualResult, Is.EqualTo(expectedResult));
+        }
+
+        [Test, AutoData]
+        public void PolarCorrectionIsCorrectlyBalanced(string name)
+        {
+            var sut = new FireSalvo(name, new Cartesian(0, 0, 1000));
+            var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
+            var deltaAzimuth = new Mils(1600);
+            var deltaElevation = new Mils(0);
+            var dDistance = 0.0;
+            var negDeltaAzimuth = new Mils(-1600);
+            var negDeltaElevation = new Mils(0);
+            var negDistance = 0.0;
+            var moved = sut.ApplyCorrection(fo, deltaAzimuth, deltaElevation, dDistance);
+            var movedBack = moved.ApplyCorrection(fo, negDeltaAzimuth, negDeltaElevation, negDistance);
+
+            Assert.That(sut, Is.EqualTo(movedBack));
+        }
+
+        [Test, AutoData]
+        public void PolarCorrectionIsCorrectlyBalancedErrorTest(string name)
+        {
+            var sut = new FireSalvo(name, new Cartesian(0, 0, 1000));
+            var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
+            var deltaAzimuth = new Mils(1600);
+            var deltaElevation = new Mils(0);
+            var dDistance = 0.0;
+            var negDeltaAzimuth = new Mils(-1601);
+            var negDeltaElevation = new Mils(0);
+            var negDistance = 0.0;
+            var moved = sut.ApplyCorrection(fo, deltaAzimuth, deltaElevation, dDistance);
+            var movedBack = moved.ApplyCorrection(fo, negDeltaAzimuth, negDeltaElevation, negDistance);
+
+            Assert.That(sut, Is.Not.EqualTo(movedBack));
+        }
+
+        [Test]
+        [InlineAutoData(1600)]
+        [InlineAutoData(8000)]
+        [InlineAutoData(1234)]
+        public void PolarCorrectionIsCorrectlyBalancedDoubleApply(
+            int mils,
+            string name
+            )
+        {
+            var sut = new FireSalvo(name, new Cartesian(0, 0, 1000));
+            var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
+            var deltaAzimuth = new Mils(mils);
+            var deltaElevation = new Mils(0);
+            var dDistance = 0.0;
+            var negDeltaAzimuth = new Mils(-mils);
+            var negDeltaElevation = new Mils(0);
+            var negDistance = 0.0;
+            var moved = sut.ApplyCorrection(fo, deltaAzimuth, deltaElevation, dDistance);
+            var movedAgain = moved.ApplyCorrection(fo, deltaAzimuth, deltaElevation, dDistance);
+            var movedBack = movedAgain.ApplyCorrection(fo, negDeltaAzimuth, negDeltaElevation, negDistance);
+            var movedBackAgain = movedBack.ApplyCorrection(fo, negDeltaAzimuth, negDeltaElevation, negDistance);
+
+            Assert.That(sut, Is.EqualTo(movedBackAgain));
+        }
+
+        [Test]
+        [InlineAutoData(5678)]
+        public void PolarCorrectionHasSomeRoundingErrorsAtArbitraryInputValues(
+            int mils,
+            string name
+            )
+        {
+            var sut = new FireSalvo(name, new Cartesian(0, 0, 1000));
+            var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
+            var deltaAzimuth = new Mils(mils);
+            var deltaElevation = new Mils(0);
+            var dDistance = 0.0;
+            var negDeltaAzimuth = new Mils(-mils);
+            var negDeltaElevation = new Mils(0);
+            var negDistance = 0.0;
+            var moved = sut.ApplyCorrection(fo, deltaAzimuth, deltaElevation, dDistance);
+            var movedAgain = moved.ApplyCorrection(fo, deltaAzimuth, deltaElevation, dDistance);
+            var movedBack = movedAgain.ApplyCorrection(fo, negDeltaAzimuth, negDeltaElevation, negDistance);
+            var movedBackAgain = movedBack.ApplyCorrection(fo, negDeltaAzimuth, negDeltaElevation, negDistance);
+
+            Assert.That(sut, Is.Not.EqualTo(movedBackAgain));
         }
     }
 }

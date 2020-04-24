@@ -8,7 +8,7 @@ namespace ArmaOps.Domain
 {
     public class FireSalvo
     {
-        const double EARTH_G = 9.80665;
+        const double EARTH_G = 9.80665; // Could pass this in constructor if necessary
         public string Name { get; }
         public Cartesian Target { get; }
 
@@ -26,7 +26,7 @@ namespace ArmaOps.Domain
 
         public FireSalvo(
             ForwardObserver fo, Mils observedAzimuth,
-            Mils observedElevation, int observedDistanceMetres)
+            Mils observedElevation, double observedDistanceMetres)
         {
             Name = $"Fire Mission for {fo.Name}";
             Target = GetCartesianTarget(fo, observedAzimuth, observedElevation, observedDistanceMetres);
@@ -41,7 +41,7 @@ namespace ArmaOps.Domain
         }
 
         Cartesian GetCartesianTarget(ForwardObserver fo, Mils observedAzimuth,
-            Mils observedElevation, int observedDistanceMetres)
+            Mils observedElevation, double observedDistanceMetres)
         {
             return new Polar(fo.Location,
                 observedAzimuth.Radians,
@@ -72,8 +72,6 @@ namespace ArmaOps.Domain
                     {
                         solutions.Add(new FireSolution(cv, indirectSolution, SolutionType.Indirect));
                     }
-
-                    //TODO: Do we add disallowed FireSolutions if we mark them disallowed?
                 }
             }
             return new BatterySolutionSet(battery, Target, azToTarget, solutions);
@@ -86,30 +84,25 @@ namespace ArmaOps.Domain
 
         public FireSalvo ApplyCorrection(Cartesian delta)
         {
-            // *** Probably wrong, didn't really think about it ***
-            //return new FireSalvo(Name, Target.Add(delta));
-            throw new NotImplementedException();
+            return new FireSalvo(Name, Target.Add(delta));
         }
 
         public FireSalvo ApplyCorrection(
-            ForwardObserver observer, Mils deltaAzimuth,
-            Mils deltaElevation, int deltaDistanceMetres)
+            ForwardObserver fo, Mils deltaAzimuth,
+            Mils deltaElevation, double deltaDistanceMetres)
         {
-            // *** Probably wrong, didn't really think about it ***
-            //var delta =
-            //    GetCartesianTarget(
-            //        observer, deltaAzimuth,
-            //        deltaElevation, deltaDistanceMetres);
-            //return new FireSalvo(Name, Target.Add(delta));
-            throw new NotImplementedException();
+            var polarTarget = Target.ToPolar(fo.Location);
+            var newTargetPolar = polarTarget.Add(deltaAzimuth.Radians, deltaElevation.Radians, deltaDistanceMetres);
+            var newTargetCartesian = newTargetPolar.ToCartesian();
+
+            return new FireSalvo(Name, newTargetCartesian);
         }
 
         public override bool Equals(object obj)
         {
             if (obj != null)
             {
-                var other = obj as FireSalvo;
-                if (other != null)
+                if (obj is FireSalvo other)
                 {
                     return
                         Name.Equals(other.Name)
@@ -119,6 +112,11 @@ namespace ArmaOps.Domain
             return false;
         }
 
-        public override int GetHashCode() => (Name, Target).GetHashCode();
+        public override string ToString()
+        {
+            return $"Name:{Name} Target:{Target}";
+        }
+
+        public override int GetHashCode() => HashCode.Combine(Name, Target);
     }
 }

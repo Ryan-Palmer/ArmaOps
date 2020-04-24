@@ -66,8 +66,7 @@ namespace ArmaOps.Domain
         {
             if (obj != null)
             {
-                var other = obj as Mils;
-                if (other != null)
+                if (obj is Mils other)
                 {
                     return
                         Value.Equals(other.Value);
@@ -81,9 +80,6 @@ namespace ArmaOps.Domain
             return $"Mils:{Value}";
         }
 
-        public override int GetHashCode()
-        {
-            return Value.GetHashCode();
-        }
+        public override int GetHashCode() => HashCode.Combine(Value);
     }
 }

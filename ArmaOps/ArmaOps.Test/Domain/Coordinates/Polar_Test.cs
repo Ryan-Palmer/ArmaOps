@@ -111,5 +111,14 @@ namespace ArmaOps.Test.Domain.Coordinates
 
             Assert.That(resultVDist, Is.EqualTo(expectedVDist));
         }
+
+        [Test, AutoData]
+        public void AddDeltaToPolarReturnsCorrectOffset()
+        {
+            var sut = new Polar(new Cartesian(0, 0, 0), 0, 0, 1000);
+            var result = sut.Add(Math.PI / 2, 100, 100);
+            var expected = new Polar(new Cartesian(0, 0, 0), Math.PI / 2, 100, 1100);
+            Assert.That(result, Is.EqualTo(expected));
+        }
     }
 }
