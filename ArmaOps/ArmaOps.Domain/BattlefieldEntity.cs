@@ -21,6 +21,7 @@ namespace ArmaOps.Domain
             Name = name;
             Location = location;
         }
+
         public override bool Equals(object obj)
         {
             if (obj != null)
@@ -34,6 +35,11 @@ namespace ArmaOps.Domain
                 }
             }
             return false;
+        }
+
+        public override string ToString()
+        {
+            return $"Name:{Name} Location:{Location}";
         }
 
         public override int GetHashCode()

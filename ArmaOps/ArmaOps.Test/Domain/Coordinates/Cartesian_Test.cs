@@ -211,6 +211,10 @@ namespace ArmaOps.Test.Domain.Coordinates
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 
-
+        [Test, AutoData]
+        public void DYReturnsYDelta(Cartesian a, Cartesian b)
+        {
+            Assert.That(a.DY(b), Is.EqualTo(a.Y - b.Y));
+        }
     }
 }

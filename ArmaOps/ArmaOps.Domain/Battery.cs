@@ -22,7 +22,7 @@ namespace ArmaOps.Domain
                 if (other != null)
                 {
                     return
-                        base.Equals((BattlefieldEntity)other)
+                        base.Equals(other)
                         && Weapon.Equals(other.Weapon);
                 }
             }
@@ -31,7 +31,7 @@ namespace ArmaOps.Domain
 
         public override int GetHashCode()
         {
-            return (base.GetHashCode(), Weapon.GetHashCode()).GetHashCode();
+            return (base.GetHashCode(), Weapon).GetHashCode();
         }
     }
 }

@@ -4,6 +4,7 @@ using AutoFixture.NUnit3;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace ArmaOps.Test.Domain.Coordinates
@@ -85,6 +86,39 @@ namespace ArmaOps.Test.Domain.Coordinates
             Polar other)
         {
             Assert.That(other.GetHashCode(), Is.Not.EqualTo(sut.GetHashCode()));
+        }
+
+        [Test, AutoData]
+        public void OriginPolarToHDist()
+        {
+            var originFO = new Cartesian(0, 0, 0);
+            var originPolar = new Polar(originFO, 0, Math.PI / 4, Math.Sqrt(2));
+            var expectedHDist = Math.Sqrt(Math.Pow(Math.Sqrt(2),2) - Math.Pow(1,2));
+
+            var resultHDist = originPolar.HDist;
+
+            Assert.That(resultHDist, Is.EqualTo(expectedHDist));
+        }
+
+        [Test, AutoData]
+        public void OriginPolarToVDist()
+        {
+            var originFO = new Cartesian(0, 0, 0);
+            var originPolar = new Polar(originFO, 0, Math.PI / 4, Math.Sqrt(2));
+            var expectedVDist = Math.Sqrt(Math.Pow(Math.Sqrt(2), 2) - Math.Pow(1, 2));
+
+            var resultVDist = originPolar.VDist;
+
+            Assert.That(resultVDist, Is.EqualTo(expectedVDist));
+        }
+
+        [Test, AutoData]
+        public void AddDeltaToPolarReturnsCorrectOffset()
+        {
+            var sut = new Polar(new Cartesian(0, 0, 0), 0, 0, 1000);
+            var result = sut.Add(Math.PI / 2, 100, 100);
+            var expected = new Polar(new Cartesian(0, 0, 0), Math.PI / 2, 100, 1100);
+            Assert.That(result, Is.EqualTo(expected));
         }
     }
 }

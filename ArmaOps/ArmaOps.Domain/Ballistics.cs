@@ -35,10 +35,8 @@ namespace ArmaOps.Domain
             }
             return false;
         }
-        public override int GetHashCode()
-        {
-            return (PositiveSolution, NegativeSolution).GetHashCode();
-        }
+
+        public override int GetHashCode() => (PositiveSolution, NegativeSolution).GetHashCode();
     }
  
     public class Ballistics

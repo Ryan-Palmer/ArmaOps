@@ -49,6 +49,11 @@ namespace ArmaOps.Domain.Coordinates
             return Subtract(this, b);
         }
 
+        public double DY(Cartesian b)
+        {
+            return Y - b.Y;
+        }
+
         public static Cartesian Add(Cartesian a, Cartesian b)
         {
             var dx = a.X + b.X;
