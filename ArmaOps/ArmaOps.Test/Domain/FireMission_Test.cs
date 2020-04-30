@@ -225,17 +225,19 @@ namespace ArmaOps.Test.Domain
             Assert.That(result[2], Is.EqualTo(expectedResult3));
         }
 
-        //[Test, AutoData]
-        //public void CartesianCorrectionIsCorrect(string name, FireMission sut)
-        //{
-        //    var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
-        //    var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
-        //    var solutionSet = new BatterySolutionSet(battery, new Cartesian(0, 0, 1000), new Mils(0), new List<FireSolution> { });
-        //    var actualResult = sut.ApplyCorrection(solutionSet, new Cartesian(10, 20, 50));
-        //    var expectedResult = new BatterySolutionSet(battery, new Cartesian(10,20, 1050), new Mils(0), new List<FireSolution> { }); //not sure all of this is correct
+        [Test, AutoData]
+        public void CartesianCorrectionIsCorrect(string name, FireMission sut)
+        {
+            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
+            var solutionSet = new BatterySolutionSet(battery, new Cartesian(0, 0, 1000), new Mils(0), new List<FireSolution> { });
+            var actualResult = sut.ApplyCorrection(solutionSet, new Cartesian(0, 0, 100));
+            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 1100), new Mils(0), new List<FireSolution> { 
+                new FireSolution(120.4, new Mils(1173), SolutionType.Indirect), 
+                new FireSolution(141.9, new Mils(1312), SolutionType.Indirect) });
 
-        //    Assert.That(actualResult, Is.EqualTo(expectedResult));
-        //}
+            Assert.That(actualResult, Is.EqualTo(expectedResult));
+        }
 
         //[Test, AutoData]
         //public void PolarCorrectionIsCorrectlyBalanced(string name)

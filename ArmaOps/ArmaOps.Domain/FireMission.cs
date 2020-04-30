@@ -72,10 +72,10 @@ namespace ArmaOps.Domain
             return batteries.Select(b => GetSolutionSet(b, fo, observedAzimuth, observedElevation, observedDistanceMetres));
         }
 
-        //public BatterySolutionSet ApplyCorrection(BatterySolutionSet last, Cartesian delta)
-        //{
-        //    return GetSolutionSet(last.Battery, last.Target.Add(delta));
-        //}
+        public BatterySolutionSet ApplyCorrection(BatterySolutionSet last, Cartesian delta)
+        {
+            return GetSolutionSet(last.Battery, last.Target.Add(delta));
+        }
 
         //public BatterySolutionSet ApplyCorrection(BatterySolutionSet last,
         //    ForwardObserver fo, Mils deltaAzimuth,
