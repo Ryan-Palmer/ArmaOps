@@ -8,6 +8,7 @@ namespace ArmaOps.Domain
 {
     public class BatterySolutionSet
     {
+        const double EARTH_G = 9.80665; // Could pass this in constructor if necessary
         public Cartesian Target { get; }
         public Battery Battery { get; }
         public Mils AzimuthToTarget { get; }
@@ -24,6 +25,22 @@ namespace ArmaOps.Domain
             AzimuthToTarget = azToTarget;
             FireSolutions = fireSolutions;
         }
+
+        //public BatterySolutionSet ApplyCorrection(Cartesian delta)
+        //{
+        //    return new FireMission(Target.Add(delta)).GetSolutionSet(Battery);
+        //}
+
+        //public BatterySolutionSet ApplyCorrection(
+        //    ForwardObserver fo, Mils deltaAzimuth,
+        //    Mils deltaElevation, double deltaDistanceMetres)
+        //{
+        //    var polarTarget = Target.ToPolar(fo.Location);
+        //    var newTargetPolar = polarTarget.Add(deltaAzimuth.Radians, deltaElevation.Radians, deltaDistanceMetres);
+        //    var newTargetCartesian = newTargetPolar.ToCartesian();
+
+        //    return new FireMission(newTargetCartesian).GetSolutionSet(Battery);
+        //}
 
         public override bool Equals(object obj)
         {
