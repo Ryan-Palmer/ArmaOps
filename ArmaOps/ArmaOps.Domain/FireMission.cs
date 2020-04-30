@@ -77,15 +77,15 @@ namespace ArmaOps.Domain
             return GetSolutionSet(last.Battery, last.Target.Add(delta));
         }
 
-        //public BatterySolutionSet ApplyCorrection(BatterySolutionSet last,
-        //    ForwardObserver fo, Mils deltaAzimuth,
-        //    Mils deltaElevation, double deltaDistanceMetres)
-        //{
-        //    var polarTarget = last.Target.ToPolar(fo.Location);
-        //    var newTargetPolar = polarTarget.Add(deltaAzimuth.Radians, deltaElevation.Radians, deltaDistanceMetres);
-        //    var newTargetCartesian = newTargetPolar.ToCartesian();
+        public BatterySolutionSet ApplyCorrection(BatterySolutionSet last,
+            ForwardObserver fo, Mils deltaAzimuth,
+            Mils deltaElevation, double deltaDistanceMetres)
+        {
+            var polarTarget = last.Target.ToPolar(fo.Location);
+            var newTargetPolar = polarTarget.Add(deltaAzimuth.Radians, deltaElevation.Radians, deltaDistanceMetres);
+            var newTargetCartesian = newTargetPolar.ToCartesian();
 
-        //    return GetSolutionSet(last.Battery, newTargetCartesian);
-        //}
+            return GetSolutionSet(last.Battery, newTargetCartesian);
+        }
     }
 }

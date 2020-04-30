@@ -239,86 +239,102 @@ namespace ArmaOps.Test.Domain
             Assert.That(actualResult, Is.EqualTo(expectedResult));
         }
 
-        //[Test, AutoData]
-        //public void PolarCorrectionIsCorrectlyBalanced(string name)
-        //{
-        //    var sut = new FireMission(name, new Cartesian(0, 0, 1000));
-        //    var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
-        //    var deltaAzimuth = new Mils(1600);
-        //    var deltaElevation = new Mils(0);
-        //    var dDistance = 0.0;
-        //    var negDeltaAzimuth = new Mils(-1600);
-        //    var negDeltaElevation = new Mils(0);
-        //    var negDistance = 0.0;
-        //    var moved = sut.ApplyCorrection(fo, deltaAzimuth, deltaElevation, dDistance);
-        //    var movedBack = moved.ApplyCorrection(fo, negDeltaAzimuth, negDeltaElevation, negDistance);
+        [Test, AutoData]
+        public void PolarCorrectionIsCorrectlyBalanced(string name, FireMission sut)
+        {
+            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
+            var solutionSet = new BatterySolutionSet(battery, new Cartesian(0, 0, 1000), new Mils(0), new List<FireSolution> {
+                new FireSolution(120.4, new Mils(1222), SolutionType.Indirect),
+                new FireSolution(141.9, new Mils(1341), SolutionType.Indirect) });
+            var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
+            var deltaAzimuth = new Mils(1600);
+            var deltaElevation = new Mils(0);
+            var dDistance = 0.0;
+            var negDeltaAzimuth = new Mils(-1600);
+            var negDeltaElevation = new Mils(0);
+            var negDistance = 0.0;
+            var moved = sut.ApplyCorrection(solutionSet, fo, deltaAzimuth, deltaElevation, dDistance);
+            var movedBack = sut.ApplyCorrection(moved, fo, negDeltaAzimuth, negDeltaElevation, negDistance);
 
-        //    Assert.That(sut, Is.EqualTo(movedBack));
-        //}
+            Assert.That(movedBack, Is.EqualTo(solutionSet));
+        }
 
-        //[Test, AutoData]
-        //public void PolarCorrectionIsCorrectlyBalancedErrorTest(string name)
-        //{
-        //    var sut = new FireMission(name, new Cartesian(0, 0, 1000));
-        //    var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
-        //    var deltaAzimuth = new Mils(1600);
-        //    var deltaElevation = new Mils(0);
-        //    var dDistance = 0.0;
-        //    var negDeltaAzimuth = new Mils(-1601);
-        //    var negDeltaElevation = new Mils(0);
-        //    var negDistance = 0.0;
-        //    var moved = sut.ApplyCorrection(fo, deltaAzimuth, deltaElevation, dDistance);
-        //    var movedBack = moved.ApplyCorrection(fo, negDeltaAzimuth, negDeltaElevation, negDistance);
+        [Test, AutoData]
+        public void PolarCorrectionIsCorrectlyBalancedErrorTest(string name, FireMission sut)
+        {
+            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
+            var solutionSet = new BatterySolutionSet(battery, new Cartesian(0, 0, 1000), new Mils(0), new List<FireSolution> {
+                new FireSolution(120.4, new Mils(1222), SolutionType.Indirect),
+                new FireSolution(141.9, new Mils(1341), SolutionType.Indirect) });
+            var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
+            var deltaAzimuth = new Mils(1600);
+            var deltaElevation = new Mils(0);
+            var dDistance = 0.0;
+            var negDeltaAzimuth = new Mils(-1601);
+            var negDeltaElevation = new Mils(0);
+            var negDistance = 0.0;
+            var moved = sut.ApplyCorrection(solutionSet, fo, deltaAzimuth, deltaElevation, dDistance);
+            var movedBack = sut.ApplyCorrection(moved, fo, negDeltaAzimuth, negDeltaElevation, negDistance);
 
-        //    Assert.That(sut, Is.Not.EqualTo(movedBack));
-        //}
+            Assert.That(movedBack, Is.Not.EqualTo(solutionSet));
+        }
 
-        //[Test]
-        //[InlineAutoData(1600)]
-        //[InlineAutoData(8000)]
-        //[InlineAutoData(1234)]
-        //public void PolarCorrectionIsCorrectlyBalancedDoubleApply(
-        //    int mils,
-        //    string name
-        //    )
-        //{
-        //    var sut = new FireMission(name, new Cartesian(0, 0, 1000));
-        //    var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
-        //    var deltaAzimuth = new Mils(mils);
-        //    var deltaElevation = new Mils(0);
-        //    var dDistance = 0.0;
-        //    var negDeltaAzimuth = new Mils(-mils);
-        //    var negDeltaElevation = new Mils(0);
-        //    var negDistance = 0.0;
-        //    var moved = sut.ApplyCorrection(fo, deltaAzimuth, deltaElevation, dDistance);
-        //    var movedAgain = moved.ApplyCorrection(fo, deltaAzimuth, deltaElevation, dDistance);
-        //    var movedBack = movedAgain.ApplyCorrection(fo, negDeltaAzimuth, negDeltaElevation, negDistance);
-        //    var movedBackAgain = movedBack.ApplyCorrection(fo, negDeltaAzimuth, negDeltaElevation, negDistance);
+        [Test]
+        [InlineAutoData(1600)]
+        [InlineAutoData(8000)]
+        [InlineAutoData(1234)]
+        public void PolarCorrectionIsCorrectlyBalancedDoubleApply(
+            int mils,
+            string name, FireMission sut
+            )
+        {
+            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
+            var solutionSet = new BatterySolutionSet(battery, new Cartesian(0, 0, 1000), new Mils(0), new List<FireSolution> {
+                new FireSolution(120.4, new Mils(1222), SolutionType.Indirect),
+                new FireSolution(141.9, new Mils(1341), SolutionType.Indirect) });
+            var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
+            var deltaAzimuth = new Mils(mils);
+            var deltaElevation = new Mils(0);
+            var dDistance = 0.0;
+            var negDeltaAzimuth = new Mils(-mils);
+            var negDeltaElevation = new Mils(0);
+            var negDistance = 0.0;
+            var moved = sut.ApplyCorrection(solutionSet, fo, deltaAzimuth, deltaElevation, dDistance);
+            var movedAgain = sut.ApplyCorrection(moved, fo, deltaAzimuth, deltaElevation, dDistance);
+            var movedBack = sut.ApplyCorrection(movedAgain, fo, negDeltaAzimuth, negDeltaElevation, negDistance);
+            var movedBackAgain = sut.ApplyCorrection(movedBack, fo, negDeltaAzimuth, negDeltaElevation, negDistance);
 
-        //    Assert.That(sut, Is.EqualTo(movedBackAgain));
-        //}
+            Assert.That(movedBackAgain, Is.EqualTo(solutionSet));
+        }
 
-        //[Test]
-        //[InlineAutoData(5678)]
-        //public void PolarCorrectionHasSomeRoundingErrorsAtArbitraryInputValues(
-        //    int mils,
-        //    string name
-        //    )
-        //{
-        //    var sut = new FireMission(name, new Cartesian(0, 0, 1000));
-        //    var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
-        //    var deltaAzimuth = new Mils(mils);
-        //    var deltaElevation = new Mils(0);
-        //    var dDistance = 0.0;
-        //    var negDeltaAzimuth = new Mils(-mils);
-        //    var negDeltaElevation = new Mils(0);
-        //    var negDistance = 0.0;
-        //    var moved = sut.ApplyCorrection(fo, deltaAzimuth, deltaElevation, dDistance);
-        //    var movedAgain = moved.ApplyCorrection(fo, deltaAzimuth, deltaElevation, dDistance);
-        //    var movedBack = movedAgain.ApplyCorrection(fo, negDeltaAzimuth, negDeltaElevation, negDistance);
-        //    var movedBackAgain = movedBack.ApplyCorrection(fo, negDeltaAzimuth, negDeltaElevation, negDistance);
+        [Test]
+        [InlineAutoData(5678)]
+        public void PolarCorrectionHasSomeRoundingErrorsAtArbitraryInputValues(
+            int mils,
+            string name, FireMission sut
+            )
+        {
+            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
+            var solutionSet = new BatterySolutionSet(battery, new Cartesian(0, 0, 1000), new Mils(0), new List<FireSolution> {
+                new FireSolution(120.4, new Mils(1222), SolutionType.Indirect),
+                new FireSolution(141.9, new Mils(1341), SolutionType.Indirect) });
+            var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
+            var deltaAzimuth = new Mils(mils);
+            var deltaElevation = new Mils(0);
+            var dDistance = 0.0;
+            var negDeltaAzimuth = new Mils(-mils);
+            var negDeltaElevation = new Mils(0);
+            var negDistance = 0.0;
+            var moved = sut.ApplyCorrection(solutionSet, fo, deltaAzimuth, deltaElevation, dDistance);
+            var movedAgain = sut.ApplyCorrection(moved, fo, deltaAzimuth, deltaElevation, dDistance);
+            var movedBack = sut.ApplyCorrection(movedAgain, fo, negDeltaAzimuth, negDeltaElevation, negDistance);
+            var movedBackAgain = sut.ApplyCorrection(movedBack, fo, negDeltaAzimuth, negDeltaElevation, negDistance);
 
-        //    Assert.That(sut, Is.Not.EqualTo(movedBackAgain));
-        //}
+            Assert.That(movedBackAgain, Is.Not.EqualTo(solutionSet));
+        }
     }
 }
