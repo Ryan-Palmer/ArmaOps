@@ -134,7 +134,7 @@ namespace ArmaOps.Test.Domain
         {
             var sut = new Ballistics(EARTH_G);
             var result = sut.GetSolutions(96.8, 100, 0);
-            var expectedResult = new BallisticsSolution(1.5183716229444228, 0.05242470385047386);
+            var expectedResult = new BallisticsSolution(1.5183716229444228, 0.05242470385047386, 19.71498762, 1.026749396, 1.5183716229444228, 0.05242470385047386);
 
             Assert.That(result, Is.EqualTo(expectedResult));
         }
@@ -144,7 +144,7 @@ namespace ArmaOps.Test.Domain
         {
             var sut = new Ballistics(EARTH_G);
             var result = sut.GetSolutions(115.5, 1259, 0);
-            var expectedResult = new BallisticsSolution(0.9796026004110153, 0.5911937263838813);
+            var expectedResult = new BallisticsSolution(0.9796026004110153, 0.5911937263838813, 19.5599029, 13.12513486, 0.9796026004110153, 0.5911937263838813);
 
             Assert.That(result, Is.EqualTo(expectedResult));
         }
@@ -154,7 +154,7 @@ namespace ArmaOps.Test.Domain
         {
             var sut = new Ballistics(EARTH_G);
             var result = sut.GetSolutions(299, 7943, 0);
-            var expectedResult = new BallisticsSolution(1.0418836824930422, 0.5289126443018544);
+            var expectedResult = new BallisticsSolution(1.0418836824930422, 0.5289126443018544, 52.63895194, 30.78283258, 1.0418836824930422, 0.5289126443018544);
 
             Assert.That(result, Is.EqualTo(expectedResult));
         }
@@ -164,7 +164,7 @@ namespace ArmaOps.Test.Domain
         {
             var sut = new Ballistics(EARTH_G);
             var result = sut.GetSolutions(810, 63096, 0);
-            var expectedResult = new BallisticsSolution(0.9548968782908429, 0.6158994485040538);
+            var expectedResult = new BallisticsSolution(0.9548968782908429, 0.6158994485040538, 134.8730992, 95.38508004, 0.9548968782908429, 0.6158994485040538);
 
             Assert.That(result, Is.EqualTo(expectedResult));
         }
@@ -174,7 +174,7 @@ namespace ArmaOps.Test.Domain
         {
             var sut = new Ballistics(EARTH_G);
             var result = sut.GetSolutions(810, 100, 0);
-            var expectedResult = new BallisticsSolution(1.5700489823617692, 0.0007473444331481063);
+            var expectedResult = new BallisticsSolution(1.5700489823617692, 0.0007473444331481063, 165.1939469, 0.1621788302, 1.5700489823617692, 0.0007473444331481063);
 
             Assert.That(result, Is.EqualTo(expectedResult));
         }
