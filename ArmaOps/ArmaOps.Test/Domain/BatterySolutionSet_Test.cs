@@ -17,9 +17,9 @@ namespace ArmaOps.Test.Domain
             IEnumerable<FireSolution> fireSolutions)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var weapon = new Weapon(name, new Mils(1), new Mils(2), charges);
+            var weapon = new Weapon(name, new Angle(1, true), new Angle(2, true), charges);
             var battery = new Battery(name, batteryLoc, weapon);
-            var azToTarget = new Mils(0);
+            var azToTarget = new Angle(0, true);
 
             var sut = new BatterySolutionSet(battery, target, azToTarget, fireSolutions);
             var sameValues = new BatterySolutionSet(battery, target, azToTarget, fireSolutions);
@@ -37,10 +37,10 @@ namespace ArmaOps.Test.Domain
             IEnumerable<FireSolution> fireSolutions)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var weapon = new Weapon(name, new Mils(1), new Mils(2), charges);
+            var weapon = new Weapon(name, new Angle(1, true), new Angle(2, true), charges);
             var battery = new Battery(name, batteryLoc, weapon);
             var battery2 = new Battery(name2, batteryLoc, weapon);
-            var azToTarget = new Mils(0);
+            var azToTarget = new Angle(0, true);
 
             var sut = new BatterySolutionSet(battery, target, azToTarget, fireSolutions);
             var other = new BatterySolutionSet(battery2, target, azToTarget, fireSolutions);
@@ -58,9 +58,9 @@ namespace ArmaOps.Test.Domain
             IEnumerable<FireSolution> fireSolutions)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var weapon = new Weapon(name, new Mils(1), new Mils(2), charges);
+            var weapon = new Weapon(name, new Angle(1, true), new Angle(2, true), charges);
             var battery = new Battery(name, batteryLoc, weapon);
-            var azToTarget = new Mils(0);
+            var azToTarget = new Angle(0, true);
 
             var sut = new BatterySolutionSet(battery, target, azToTarget, fireSolutions);
             var other = new BatterySolutionSet(battery, target2, azToTarget, fireSolutions);
@@ -78,9 +78,9 @@ namespace ArmaOps.Test.Domain
             IEnumerable<FireSolution> fireSolutions2)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var weapon = new Weapon(name, new Mils(1), new Mils(2), charges);
+            var weapon = new Weapon(name, new Angle(1, true), new Angle(2, true), charges);
             var battery = new Battery(name, batteryLoc, weapon);
-            var azToTarget = new Mils(0);
+            var azToTarget = new Angle(0, true);
 
             var sut = new BatterySolutionSet(battery, target, azToTarget, fireSolutions);
             var other = new BatterySolutionSet(battery, target, azToTarget, fireSolutions2);
@@ -97,10 +97,10 @@ namespace ArmaOps.Test.Domain
             IEnumerable<FireSolution> fireSolutions)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var weapon = new Weapon(name, new Mils(1), new Mils(2), charges);
+            var weapon = new Weapon(name, new Angle(1, true), new Angle(2, true), charges);
             var battery = new Battery(name, batteryLoc, weapon);
-            var azToTarget = new Mils(0);
-            var azToTarget2 = new Mils(1);
+            var azToTarget = new Angle(0, true);
+            var azToTarget2 = new Angle(1, true);
 
             var sut = new BatterySolutionSet(battery, target, azToTarget, fireSolutions);
             var other = new BatterySolutionSet(battery, target, azToTarget2, fireSolutions);
@@ -114,7 +114,7 @@ namespace ArmaOps.Test.Domain
         //public void CartesianCorrectionIsCorrect(string name)
         //{
         //    var charges = new List<double> { 0, 1, 2 };
-        //    var weapon = new Weapon(name, new Mils(1), new Mils(2), charges);
+        //    var weapon = new Weapon(name, new Angle(1, true), new Angle(2, true), charges);
         //    var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
         //    var sut = new FireMission(name, new Cartesian(0, 0, 1000)).GetSolutionSet(battery);
         //    var actualResult = sut.ApplyCorrection(new Cartesian(10, 20, 50));
@@ -127,15 +127,15 @@ namespace ArmaOps.Test.Domain
         //public void PolarCorrectionIsCorrectlyBalanced(string name)
         //{
         //    var charges = new List<double> { 0, 1, 2 };
-        //    var weapon = new Weapon(name, new Mils(1), new Mils(2), charges);
+        //    var weapon = new Weapon(name, new Angle(1, true), new Angle(2, true), charges);
         //    var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
         //    var sut = new FireMission(name, new Cartesian(0, 0, 1000)).GetSolutionSet(battery);
         //    var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
-        //    var deltaAzimuth = new Mils(1600);
-        //    var deltaElevation = new Mils(0);
+        //    var deltaAzimuth = new Angle(1600, true);
+        //    var deltaElevation = new Angle(0, true);
         //    var dDistance = 0.0;
-        //    var negDeltaAzimuth = new Mils(-1600);
-        //    var negDeltaElevation = new Mils(0);
+        //    var negDeltaAzimuth = new Angle(-1600, true);
+        //    var negDeltaElevation = new Angle(0, true);
         //    var negDistance = 0.0;
         //    var moved = sut.ApplyCorrection(fo, deltaAzimuth, deltaElevation, dDistance);
         //    var movedBack = moved.ApplyCorrection(fo, negDeltaAzimuth, negDeltaElevation, negDistance);
@@ -147,15 +147,15 @@ namespace ArmaOps.Test.Domain
         //public void PolarCorrectionIsCorrectlyBalancedErrorTest(string name)
         //{
         //    var charges = new List<double> { 0, 1, 2 };
-        //    var weapon = new Weapon(name, new Mils(1), new Mils(2), charges);
+        //    var weapon = new Weapon(name, new Angle(1, true), new Angle(2, true), charges);
         //    var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
         //    var sut = new FireMission(name, new Cartesian(0, 0, 1000)).GetSolutionSet(battery);
         //    var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
-        //    var deltaAzimuth = new Mils(1600);
-        //    var deltaElevation = new Mils(0);
+        //    var deltaAzimuth = new Angle(1600, true);
+        //    var deltaElevation = new Angle(0, true);
         //    var dDistance = 0.0;
-        //    var negDeltaAzimuth = new Mils(-1601);
-        //    var negDeltaElevation = new Mils(0);
+        //    var negDeltaAzimuth = new Angle(-1601, true);
+        //    var negDeltaElevation = new Angle(0, true);
         //    var negDistance = 0.0;
         //    var moved = sut.ApplyCorrection(fo, deltaAzimuth, deltaElevation, dDistance);
         //    var movedBack = moved.ApplyCorrection(fo, negDeltaAzimuth, negDeltaElevation, negDistance);
@@ -168,20 +168,20 @@ namespace ArmaOps.Test.Domain
         //[InlineAutoData(8000)]
         //[InlineAutoData(1234)]
         //public void PolarCorrectionIsCorrectlyBalancedDoubleApply(
-        //    int mils,
+        //    int Mils,
         //    string name
         //    )
         //{
         //    var charges = new List<double> { 0, 1, 2 };
-        //    var weapon = new Weapon(name, new Mils(1), new Mils(2), charges);
+        //    var weapon = new Weapon(name, new Angle(1, true), new Angle(2, true), charges);
         //    var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
         //    var sut = new FireMission(name, new Cartesian(0, 0, 1000)).GetSolutionSet(battery);
         //    var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
-        //    var deltaAzimuth = new Mils(mils);
-        //    var deltaElevation = new Mils(0);
+        //    var deltaAzimuth = new Angle(Mils, true);
+        //    var deltaElevation = new Angle(0, true);
         //    var dDistance = 0.0;
-        //    var negDeltaAzimuth = new Mils(-mils);
-        //    var negDeltaElevation = new Mils(0);
+        //    var negDeltaAzimuth = new Angle(-Mils, true);
+        //    var negDeltaElevation = new Angle(0, true);
         //    var negDistance = 0.0;
         //    var moved = sut.ApplyCorrection(fo, deltaAzimuth, deltaElevation, dDistance);
         //    var movedAgain = moved.ApplyCorrection(fo, deltaAzimuth, deltaElevation, dDistance);
@@ -194,20 +194,20 @@ namespace ArmaOps.Test.Domain
         //[Test]
         //[InlineAutoData(5678)]
         //public void PolarCorrectionHasSomeRoundingErrorsAtArbitraryInputValues(
-        //    int mils,
+        //    int Mils,
         //    string name
         //    )
         //{
         //    var charges = new List<double> { 0, 1, 2 };
-        //    var weapon = new Weapon(name, new Mils(1), new Mils(2), charges);
+        //    var weapon = new Weapon(name, new Angle(1, true), new Angle(2, true), charges);
         //    var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
         //    var sut = new FireMission(name, new Cartesian(0, 0, 1000)).GetSolutionSet(battery);
         //    var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
-        //    var deltaAzimuth = new Mils(mils);
-        //    var deltaElevation = new Mils(0);
+        //    var deltaAzimuth = new Angle(Mils, true);
+        //    var deltaElevation = new Angle(0, true);
         //    var dDistance = 0.0;
-        //    var negDeltaAzimuth = new Mils(-mils);
-        //    var negDeltaElevation = new Mils(0);
+        //    var negDeltaAzimuth = new Angle(-Mils, true);
+        //    var negDeltaElevation = new Angle(0, true);
         //    var negDistance = 0.0;
         //    var moved = sut.ApplyCorrection(fo, deltaAzimuth, deltaElevation, dDistance);
         //    var movedAgain = moved.ApplyCorrection(fo, deltaAzimuth, deltaElevation, dDistance);

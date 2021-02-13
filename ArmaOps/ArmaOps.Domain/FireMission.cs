@@ -30,15 +30,15 @@ namespace ArmaOps.Domain
         {
             var ballistics = new Ballistics(EARTH_G);
             var polarToTarget = target.ToPolar(battery.Location);
-            var azToTarget = new Mils(polarToTarget.Azimuth);
+            var azToTarget = new Angle(polarToTarget.Azimuth);
             var solutions = new List<FireSolution>();
             foreach (var cv in battery.Weapon.ChargeVelocities)
             {
                 var ballisticSolutions = ballistics?.GetSolutions(cv, polarToTarget.HDist, polarToTarget.VDist);
                 if (ballisticSolutions != null)
                 {
-                    var directSolution = new Mils(ballisticSolutions.NegativeSolution);
-                    var indirectSolution = new Mils(ballisticSolutions.PositiveSolution);
+                    var directSolution = new Angle(ballisticSolutions.NegativeSolution);
+                    var indirectSolution = new Angle(ballisticSolutions.PositiveSolution);
 
                     if (battery.Weapon.ElevationIsAllowed(directSolution))
                     {
@@ -55,7 +55,7 @@ namespace ArmaOps.Domain
         }
 
         BatterySolutionSet GetSolutionSet(Battery battery, 
-            ForwardObserver fo, Mils observedAzimuth, Mils observedElevation, double observedDistanceMetres)
+            ForwardObserver fo, Angle observedAzimuth, Angle observedElevation, double observedDistanceMetres)
         {
             var polarTarget = new Polar(fo.Location, observedAzimuth.Radians, observedElevation.Radians, observedDistanceMetres);
             return GetSolutionSet(battery, polarTarget.ToCartesian());
@@ -67,7 +67,7 @@ namespace ArmaOps.Domain
         }
 
         public IEnumerable<BatterySolutionSet> GetSolutionSets(IEnumerable<Battery> batteries, 
-            ForwardObserver fo, Mils observedAzimuth, Mils observedElevation, double observedDistanceMetres)
+            ForwardObserver fo, Angle observedAzimuth, Angle observedElevation, double observedDistanceMetres)
         {
             return batteries.Select(b => GetSolutionSet(b, fo, observedAzimuth, observedElevation, observedDistanceMetres));
         }
@@ -78,8 +78,8 @@ namespace ArmaOps.Domain
         }
 
         public BatterySolutionSet ApplyCorrection(BatterySolutionSet last,
-            ForwardObserver fo, Mils deltaAzimuth,
-            Mils deltaElevation, double deltaDistanceMetres)
+            ForwardObserver fo, Angle deltaAzimuth,
+            Angle deltaElevation, double deltaDistanceMetres)
         {
             var polarTarget = last.Target.ToPolar(fo.Location);
             var newTargetPolar = polarTarget.Add(deltaAzimuth.Radians, deltaElevation.Radians, deltaDistanceMetres);

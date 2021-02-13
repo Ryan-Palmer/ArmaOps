@@ -15,7 +15,7 @@ namespace ArmaOps.Test.Domain
         public void EqualsTrueIfAllValuesMatch(string name, Cartesian loc)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var weapon = new Weapon(name, new Mils(1), new Mils(2), charges);
+            var weapon = new Weapon(name, new Angle(1, true), new Angle(2, true), charges);
             var sut = new Battery(name, loc, weapon);
             var sameValues = new Battery(name, loc, weapon);
 
@@ -29,7 +29,7 @@ namespace ArmaOps.Test.Domain
             Cartesian loc)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var weapon = new Weapon(name, new Mils(1), new Mils(2), charges);
+            var weapon = new Weapon(name, new Angle(1, true), new Angle(2, true), charges);
             var sut = new Battery(name, loc, weapon);
             var other = new Battery(name2, loc, weapon);
 
@@ -43,7 +43,7 @@ namespace ArmaOps.Test.Domain
             Cartesian loc2)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var weapon = new Weapon(name, new Mils(1), new Mils(2), charges);
+            var weapon = new Weapon(name, new Angle(1, true), new Angle(2, true), charges);
             var sut = new Battery(name, loc, weapon);
             var other = new Battery(name, loc2, weapon);
 
@@ -57,8 +57,8 @@ namespace ArmaOps.Test.Domain
             Cartesian loc)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var weapon = new Weapon(name, new Mils(1), new Mils(2), charges);
-            var weapon2 = new Weapon(name2, new Mils(1), new Mils(2), charges);
+            var weapon = new Weapon(name, new Angle(1, true), new Angle(2, true), charges);
+            var weapon2 = new Weapon(name2, new Angle(1, true), new Angle(2, true), charges);
             var sut = new Battery(name, loc, weapon);
             var other = new Battery(name, loc, weapon2);
 
@@ -69,7 +69,7 @@ namespace ArmaOps.Test.Domain
         public void HashCodeMatchIfAllValuesMatch(string name, Cartesian loc)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var weapon = new Weapon(name, new Mils(1), new Mils(2), charges);
+            var weapon = new Weapon(name, new Angle(1, true), new Angle(2, true), charges);
             var sut = new Battery(name, loc, weapon);
             var sameValues = new Battery(name, loc, weapon);
 
@@ -83,7 +83,7 @@ namespace ArmaOps.Test.Domain
             Cartesian loc)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var weapon = new Weapon(name, new Mils(1), new Mils(2), charges);
+            var weapon = new Weapon(name, new Angle(1, true), new Angle(2, true), charges);
             var sut = new Battery(name, loc, weapon);
             var other = new Battery(name2, loc, weapon);
 
@@ -97,8 +97,8 @@ namespace ArmaOps.Test.Domain
             string name2)
         {
             var charges = new List<double> { 0, 1, 2 };
-            var weapon = new Weapon(name, new Mils(1), new Mils(2), charges);
-            var weapon2 = new Weapon(name2, new Mils(1), new Mils(2), charges);
+            var weapon = new Weapon(name, new Angle(1, true), new Angle(2, true), charges);
+            var weapon2 = new Weapon(name2, new Angle(1, true), new Angle(2, true), charges);
             var sut = new Battery(name, loc, weapon);
             var other = new Battery(name, loc, weapon2);
 

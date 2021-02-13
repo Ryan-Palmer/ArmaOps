@@ -13,7 +13,7 @@ namespace ArmaOps.Test.Domain
         [Test, AutoData]
         public void EqualsTrueIfAllValuesMatch(
             double chargeVelocity,
-            Mils elevation,
+            Angle elevation,
             SolutionType sType)
         {
             var sut = new FireSolution(chargeVelocity, elevation, sType);
@@ -27,7 +27,7 @@ namespace ArmaOps.Test.Domain
         public void EqualsFalseIfChargeVelocityMismatch(
             double chargeVelocity,
             double chargeVelocity2,
-            Mils elevation,
+            Angle elevation,
             SolutionType sType)
         {
             var sut = new FireSolution(chargeVelocity, elevation, sType);
@@ -40,8 +40,8 @@ namespace ArmaOps.Test.Domain
         [Test, AutoData]
         public void EqualsFalseIfElevationMismatch(
             double chargeVelocity,
-            Mils elevation,
-            Mils elevation2,
+            Angle elevation,
+            Angle elevation2,
             SolutionType sType)
         {
             var sut = new FireSolution(chargeVelocity, elevation, sType);
@@ -54,7 +54,7 @@ namespace ArmaOps.Test.Domain
         [Test, AutoData]
         public void EqualsFalseIfSolutionTypeMismatch(
             double chargeVelocity,
-            Mils elevation,
+            Angle elevation,
             SolutionType sType,
             SolutionType sType2)
         {

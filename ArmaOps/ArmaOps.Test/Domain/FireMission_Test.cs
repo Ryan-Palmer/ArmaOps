@@ -35,7 +35,7 @@ namespace ArmaOps.Test.Domain
             string name,
             FireMission sut)
         {
-            var weapon = new Weapon(name, new Mils(minElev), new Mils(maxElev), new List<double> { charge1, charge2, charge3 });
+            var weapon = new Weapon(name, new Angle(minElev, true), new Angle(maxElev, true), new List<double> { charge1, charge2, charge3 });
             var battery = new Battery(name, new Cartesian(locX, locY, locZ), weapon);
             var result = sut.GetSolutionSets(new List<Battery> { battery }, new Cartesian(targetX, targetY, targetZ));
 
@@ -74,10 +74,10 @@ namespace ArmaOps.Test.Domain
             string name,
             FireMission sut)
         {
-            var weapon = new Weapon(name, new Mils(minElev), new Mils(maxElev), new List<double> { charge1, charge2, charge3 });
+            var weapon = new Weapon(name, new Angle(minElev, true), new Angle(maxElev, true), new List<double> { charge1, charge2, charge3 });
             var battery = new Battery(name, new Cartesian(locX, locY, locZ), weapon);
             var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
-            var result = sut.GetSolutionSets(new List<Battery> { battery }, fo, new Mils(observedAzimuth), new Mils(observedElevation), observedDistanceMetres);
+            var result = sut.GetSolutionSets(new List<Battery> { battery }, fo, new Angle(observedAzimuth, true), new Angle(observedElevation, true), observedDistanceMetres);
 
             Assert.That(result.First().FireSolutions.Count(), Is.EqualTo(0));
         }
@@ -87,15 +87,15 @@ namespace ArmaOps.Test.Domain
         public void SolutionIsViableForIronFrontIfNearestTriple(string name,
             FireMission sut)
         {
-            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var weapon = new Weapon(name, new Angle(942, true), new Angle(1547, true), new List<double> { 96.8, 120.4, 141.9 });
             var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
             var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
-            var result = sut.GetSolutionSets(new List<Battery> { battery }, fo, new Mils(0), new Mils(0), 250);
-            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 250), new Mils(0),
+            var result = sut.GetSolutionSets(new List<Battery> { battery }, fo, new Angle(0, true), new Angle(0, true), 250);
+            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 250), new Angle(0, true),
                 new List<FireSolution> {
-                    new FireSolution(96.8, new Mils(1465), SolutionType.Indirect),
-                    new FireSolution(120.4, new Mils(1513), SolutionType.Indirect),
-                    new FireSolution(141.9, new Mils(1538), SolutionType.Indirect),
+                    new FireSolution(96.8, new Angle(1465, true), SolutionType.Indirect),
+                    new FireSolution(120.4, new Angle(1513, true), SolutionType.Indirect),
+                    new FireSolution(141.9, new Angle(1538, true), SolutionType.Indirect),
                 });
 
             Assert.That(result.First(), Is.EqualTo(expectedResult));
@@ -104,15 +104,15 @@ namespace ArmaOps.Test.Domain
         [Test, AutoData]
         public void SolutionIsViableForIronFrontIfFurthestTriple(string name, FireMission sut)
         {
-            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var weapon = new Weapon(name, new Angle(942, true), new Angle(1547, true), new List<double> { 96.8, 120.4, 141.9 });
             var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
             var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
-            var result = sut.GetSolutionSets(new List<Battery> { battery }, fo, new Mils(0), new Mils(0), 900);
-            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 900), new Mils(0),
+            var result = sut.GetSolutionSets(new List<Battery> { battery }, fo, new Angle(0, true), new Angle(0, true), 900);
+            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 900), new Angle(0, true),
                 new List<FireSolution> {
-                    new FireSolution(96.8,  new Mils(974),  SolutionType.Indirect),
-                    new FireSolution(120.4, new Mils(1267), SolutionType.Indirect),
-                    new FireSolution(141.9, new Mils(1369), SolutionType.Indirect),
+                    new FireSolution(96.8,  new Angle(974, true),  SolutionType.Indirect),
+                    new FireSolution(120.4, new Angle(1267, true), SolutionType.Indirect),
+                    new FireSolution(141.9, new Angle(1369, true), SolutionType.Indirect),
                 });
 
             Assert.That(result.First(), Is.EqualTo(expectedResult));
@@ -121,14 +121,14 @@ namespace ArmaOps.Test.Domain
         [Test, AutoData]
         public void SolutionIsViableForIronFrontIfFurthestTriplePlusOne(string name, FireMission sut)
         {
-            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var weapon = new Weapon(name, new Angle(942, true), new Angle(1547, true), new List<double> { 96.8, 120.4, 141.9 });
             var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
             var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
-            var result = sut.GetSolutionSets(new List<Battery> { battery }, fo, new Mils(0), new Mils(0), 950);
-            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 950), new Mils(0),
+            var result = sut.GetSolutionSets(new List<Battery> { battery }, fo, new Angle(0, true), new Angle(0, true), 950);
+            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 950), new Angle(0, true),
                 new List<FireSolution> {
-                    new FireSolution(120.4, new Mils(1245), SolutionType.Indirect),
-                    new FireSolution(141.9, new Mils(1355), SolutionType.Indirect),
+                    new FireSolution(120.4, new Angle(1245, true), SolutionType.Indirect),
+                    new FireSolution(141.9, new Angle(1355, true), SolutionType.Indirect),
                 });
 
             Assert.That(result.First(), Is.EqualTo(expectedResult));
@@ -137,14 +137,14 @@ namespace ArmaOps.Test.Domain
         [Test, AutoData]
         public void SolutionIsViableForIronFrontIfFurthestDouble(string name, FireMission sut)
         {
-            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var weapon = new Weapon(name, new Angle(942, true), new Angle(1547, true), new List<double> { 96.8, 120.4, 141.9 });
             var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
             var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
-            var result = sut.GetSolutionSets(new List<Battery> { battery }, fo, new Mils(0), new Mils(0), 1400);
-            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 1400), new Mils(0),
+            var result = sut.GetSolutionSets(new List<Battery> { battery }, fo, new Angle(0, true), new Angle(0, true), 1400);
+            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 1400), new Angle(0, true),
                 new List<FireSolution> {
-                    new FireSolution(120.4, new Mils(966), SolutionType.Indirect),
-                    new FireSolution(141.9, new Mils(1218), SolutionType.Indirect),
+                    new FireSolution(120.4, new Angle(966, true), SolutionType.Indirect),
+                    new FireSolution(141.9, new Angle(1218, true), SolutionType.Indirect),
                 });
 
             Assert.That(result.First(), Is.EqualTo(expectedResult));
@@ -153,13 +153,13 @@ namespace ArmaOps.Test.Domain
         [Test, AutoData]
         public void SolutionIsViableForIronFrontIfFurthestDoublePlusOne(string name, FireMission sut)
         {
-            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var weapon = new Weapon(name, new Angle(942, true), new Angle(1547, true), new List<double> { 96.8, 120.4, 141.9 });
             var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
             var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
-            var result = sut.GetSolutionSets(new List<Battery> { battery }, fo, new Mils(0), new Mils(0), 1450);
-            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 1450), new Mils(0),
+            var result = sut.GetSolutionSets(new List<Battery> { battery }, fo, new Angle(0, true), new Angle(0, true), 1450);
+            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 1450), new Angle(0, true),
                 new List<FireSolution> {
-                    new FireSolution(141.9, new Mils(1201), SolutionType.Indirect),
+                    new FireSolution(141.9, new Angle(1201, true), SolutionType.Indirect),
                 });
 
             Assert.That(result.First(), Is.EqualTo(expectedResult));
@@ -168,13 +168,13 @@ namespace ArmaOps.Test.Domain
         [Test, AutoData]
         public void SolutionIsViableForIronFrontIfFurthestSingle(string name, FireMission sut)
         {
-            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var weapon = new Weapon(name, new Angle(942, true), new Angle(1547, true), new List<double> { 96.8, 120.4, 141.9 });
             var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
             var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
-            var result = sut.GetSolutionSets(new List<Battery> { battery }, fo, new Mils(0), new Mils(0), 1950);
-            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 1950), new Mils(0),
+            var result = sut.GetSolutionSets(new List<Battery> { battery }, fo, new Angle(0, true), new Angle(0, true), 1950);
+            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 1950), new Angle(0, true),
                 new List<FireSolution> {
-                    new FireSolution(141.9, new Mils(962), SolutionType.Indirect),
+                    new FireSolution(141.9, new Angle(962, true), SolutionType.Indirect),
                 });
 
             Assert.That(result.First(), Is.EqualTo(expectedResult));
@@ -183,11 +183,11 @@ namespace ArmaOps.Test.Domain
         [Test, AutoData]
         public void SolutionIsViableForIronFrontIfFurthestSinglePlusOne(string name, FireMission sut)
         {
-            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var weapon = new Weapon(name, new Angle(942, true), new Angle(1547, true), new List<double> { 96.8, 120.4, 141.9 });
             var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
             var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
-            var result = sut.GetSolutionSets(new List<Battery> { battery }, fo, new Mils(0), new Mils(0), 2000);
-            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 2000), new Mils(0),
+            var result = sut.GetSolutionSets(new List<Battery> { battery }, fo, new Angle(0, true), new Angle(0, true), 2000);
+            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 2000), new Angle(0, true),
                 new List<FireSolution> {
                 });
 
@@ -197,24 +197,24 @@ namespace ArmaOps.Test.Domain
         [Test, AutoData]
         public void MultipleSolutionSetsCalculatedCorrectly(string name, FireMission sut)
         {
-            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var weapon = new Weapon(name, new Angle(942, true), new Angle(1547, true), new List<double> { 96.8, 120.4, 141.9 });
             var battery1 = new Battery(name, new Cartesian(0, 0, 0), weapon);
             var battery2 = new Battery(name, new Cartesian(0, 0, 2000), weapon);
             var battery3 = new Battery(name, new Cartesian(0, 0, 20000), weapon);
             var result = sut.GetSolutionSets(new List<Battery> { battery1, battery2, battery3 }, new Cartesian(0, 0, 1000)).ToList();
-            var expectedResult1 = new BatterySolutionSet(battery1, new Cartesian(0, 0, 1000), new Mils(0),
+            var expectedResult1 = new BatterySolutionSet(battery1, new Cartesian(0, 0, 1000), new Angle(0, true),
                 new List<FireSolution>
                 {
-                    new FireSolution(120.4, new Mils(1222), SolutionType.Indirect),
-                    new FireSolution(141.9, new Mils(1341), SolutionType.Indirect)
+                    new FireSolution(120.4, new Angle(1222, true), SolutionType.Indirect),
+                    new FireSolution(141.9, new Angle(1341, true), SolutionType.Indirect)
                 });
-            var expectedResult2 = new BatterySolutionSet(battery2, new Cartesian(0, 0, 1000), new Mils(3200),
+            var expectedResult2 = new BatterySolutionSet(battery2, new Cartesian(0, 0, 1000), new Angle(3200, true),
                 new List<FireSolution>
                 {
-                    new FireSolution(120.4, new Mils(1222), SolutionType.Indirect),
-                    new FireSolution(141.9, new Mils(1341), SolutionType.Indirect)
+                    new FireSolution(120.4, new Angle(1222, true), SolutionType.Indirect),
+                    new FireSolution(141.9, new Angle(1341, true), SolutionType.Indirect)
                 });
-            var expectedResult3 = new BatterySolutionSet(battery3, new Cartesian(0, 0, 1000), new Mils(3200),
+            var expectedResult3 = new BatterySolutionSet(battery3, new Cartesian(0, 0, 1000), new Angle(3200, true),
                 new List<FireSolution>
                 {
                 });
@@ -228,13 +228,13 @@ namespace ArmaOps.Test.Domain
         [Test, AutoData]
         public void CartesianCorrectionIsCorrect(string name, FireMission sut)
         {
-            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var weapon = new Weapon(name, new Angle(942, true), new Angle(1547, true), new List<double> { 96.8, 120.4, 141.9 });
             var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
-            var solutionSet = new BatterySolutionSet(battery, new Cartesian(0, 0, 1000), new Mils(0), new List<FireSolution> { });
+            var solutionSet = new BatterySolutionSet(battery, new Cartesian(0, 0, 1000), new Angle(0, true), new List<FireSolution> { });
             var actualResult = sut.ApplyCorrection(solutionSet, new Cartesian(0, 0, 100));
-            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 1100), new Mils(0), new List<FireSolution> { 
-                new FireSolution(120.4, new Mils(1173), SolutionType.Indirect), 
-                new FireSolution(141.9, new Mils(1312), SolutionType.Indirect) });
+            var expectedResult = new BatterySolutionSet(battery, new Cartesian(0, 0, 1100), new Angle(0, true), new List<FireSolution> { 
+                new FireSolution(120.4, new Angle(1173, true), SolutionType.Indirect), 
+                new FireSolution(141.9, new Angle(1312, true), SolutionType.Indirect) });
 
             Assert.That(actualResult, Is.EqualTo(expectedResult));
         }
@@ -242,17 +242,17 @@ namespace ArmaOps.Test.Domain
         [Test, AutoData]
         public void PolarCorrectionIsCorrectlyBalanced(string name, FireMission sut)
         {
-            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var weapon = new Weapon(name, new Angle(942, true), new Angle(1547, true), new List<double> { 96.8, 120.4, 141.9 });
             var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
-            var solutionSet = new BatterySolutionSet(battery, new Cartesian(0, 0, 1000), new Mils(0), new List<FireSolution> {
-                new FireSolution(120.4, new Mils(1222), SolutionType.Indirect),
-                new FireSolution(141.9, new Mils(1341), SolutionType.Indirect) });
+            var solutionSet = new BatterySolutionSet(battery, new Cartesian(0, 0, 1000), new Angle(0, true), new List<FireSolution> {
+                new FireSolution(120.4, new Angle(1222, true), SolutionType.Indirect),
+                new FireSolution(141.9, new Angle(1341, true), SolutionType.Indirect) });
             var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
-            var deltaAzimuth = new Mils(1600);
-            var deltaElevation = new Mils(0);
+            var deltaAzimuth = new Angle(1600, true);
+            var deltaElevation = new Angle(0, true);
             var dDistance = 0.0;
-            var negDeltaAzimuth = new Mils(-1600);
-            var negDeltaElevation = new Mils(0);
+            var negDeltaAzimuth = new Angle(-1600, true);
+            var negDeltaElevation = new Angle(0, true);
             var negDistance = 0.0;
             var moved = sut.ApplyCorrection(solutionSet, fo, deltaAzimuth, deltaElevation, dDistance);
             var movedBack = sut.ApplyCorrection(moved, fo, negDeltaAzimuth, negDeltaElevation, negDistance);
@@ -263,17 +263,17 @@ namespace ArmaOps.Test.Domain
         [Test, AutoData]
         public void PolarCorrectionIsCorrectlyBalancedErrorTest(string name, FireMission sut)
         {
-            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var weapon = new Weapon(name, new Angle(942, true), new Angle(1547, true), new List<double> { 96.8, 120.4, 141.9 });
             var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
-            var solutionSet = new BatterySolutionSet(battery, new Cartesian(0, 0, 1000), new Mils(0), new List<FireSolution> {
-                new FireSolution(120.4, new Mils(1222), SolutionType.Indirect),
-                new FireSolution(141.9, new Mils(1341), SolutionType.Indirect) });
+            var solutionSet = new BatterySolutionSet(battery, new Cartesian(0, 0, 1000), new Angle(0, true), new List<FireSolution> {
+                new FireSolution(120.4, new Angle(1222, true), SolutionType.Indirect),
+                new FireSolution(141.9, new Angle(1341, true), SolutionType.Indirect) });
             var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
-            var deltaAzimuth = new Mils(1600);
-            var deltaElevation = new Mils(0);
+            var deltaAzimuth = new Angle(1600, true);
+            var deltaElevation = new Angle(0, true);
             var dDistance = 0.0;
-            var negDeltaAzimuth = new Mils(-1601);
-            var negDeltaElevation = new Mils(0);
+            var negDeltaAzimuth = new Angle(-1601, true);
+            var negDeltaElevation = new Angle(0, true);
             var negDistance = 0.0;
             var moved = sut.ApplyCorrection(solutionSet, fo, deltaAzimuth, deltaElevation, dDistance);
             var movedBack = sut.ApplyCorrection(moved, fo, negDeltaAzimuth, negDeltaElevation, negDistance);
@@ -290,17 +290,17 @@ namespace ArmaOps.Test.Domain
             string name, FireMission sut
             )
         {
-            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var weapon = new Weapon(name, new Angle(942, true), new Angle(1547, true), new List<double> { 96.8, 120.4, 141.9 });
             var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
-            var solutionSet = new BatterySolutionSet(battery, new Cartesian(0, 0, 1000), new Mils(0), new List<FireSolution> {
-                new FireSolution(120.4, new Mils(1222), SolutionType.Indirect),
-                new FireSolution(141.9, new Mils(1341), SolutionType.Indirect) });
+            var solutionSet = new BatterySolutionSet(battery, new Cartesian(0, 0, 1000), new Angle(0, true), new List<FireSolution> {
+                new FireSolution(120.4, new Angle(1222, true), SolutionType.Indirect),
+                new FireSolution(141.9, new Angle(1341, true), SolutionType.Indirect) });
             var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
-            var deltaAzimuth = new Mils(mils);
-            var deltaElevation = new Mils(0);
+            var deltaAzimuth = new Angle(mils, true);
+            var deltaElevation = new Angle(0, true);
             var dDistance = 0.0;
-            var negDeltaAzimuth = new Mils(-mils);
-            var negDeltaElevation = new Mils(0);
+            var negDeltaAzimuth = new Angle(-mils, true);
+            var negDeltaElevation = new Angle(0, true);
             var negDistance = 0.0;
             var moved = sut.ApplyCorrection(solutionSet, fo, deltaAzimuth, deltaElevation, dDistance);
             var movedAgain = sut.ApplyCorrection(moved, fo, deltaAzimuth, deltaElevation, dDistance);
@@ -317,17 +317,17 @@ namespace ArmaOps.Test.Domain
             string name, FireMission sut
             )
         {
-            var weapon = new Weapon(name, new Mils(942), new Mils(1547), new List<double> { 96.8, 120.4, 141.9 });
+            var weapon = new Weapon(name, new Angle(942, true), new Angle(1547, true), new List<double> { 96.8, 120.4, 141.9 });
             var battery = new Battery(name, new Cartesian(0, 0, 0), weapon);
-            var solutionSet = new BatterySolutionSet(battery, new Cartesian(0, 0, 1000), new Mils(0), new List<FireSolution> {
-                new FireSolution(120.4, new Mils(1222), SolutionType.Indirect),
-                new FireSolution(141.9, new Mils(1341), SolutionType.Indirect) });
+            var solutionSet = new BatterySolutionSet(battery, new Cartesian(0, 0, 1000), new Angle(0, true), new List<FireSolution> {
+                new FireSolution(120.4, new Angle(1222, true), SolutionType.Indirect),
+                new FireSolution(141.9, new Angle(1341, true), SolutionType.Indirect) });
             var fo = new ForwardObserver(name, new Cartesian(0, 0, 0));
-            var deltaAzimuth = new Mils(mils);
-            var deltaElevation = new Mils(0);
+            var deltaAzimuth = new Angle(mils, true);
+            var deltaElevation = new Angle(0, true);
             var dDistance = 0.0;
-            var negDeltaAzimuth = new Mils(-mils);
-            var negDeltaElevation = new Mils(0);
+            var negDeltaAzimuth = new Angle(-mils, true);
+            var negDeltaElevation = new Angle(0, true);
             var negDistance = 0.0;
             var moved = sut.ApplyCorrection(solutionSet, fo, deltaAzimuth, deltaElevation, dDistance);
             var movedAgain = sut.ApplyCorrection(moved, fo, deltaAzimuth, deltaElevation, dDistance);

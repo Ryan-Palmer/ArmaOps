@@ -9,12 +9,12 @@ namespace ArmaOps.Domain
     public class FireSolution
     {
         public double ChargeVelocity { get; }
-        public Mils Elevation { get; }
+        public Angle Elevation { get; }
         public SolutionType SolutionType { get; }
 
         public FireSolution(
             double chargeVelocity,
-            Mils elevation,
+            Angle elevation,
             SolutionType solutionType)
         {
             ChargeVelocity = chargeVelocity;

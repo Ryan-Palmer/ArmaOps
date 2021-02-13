@@ -11,13 +11,13 @@ namespace ArmaOps.Domain
         const double EARTH_G = 9.80665; // Could pass this in constructor if necessary
         public Cartesian Target { get; }
         public Battery Battery { get; }
-        public Mils AzimuthToTarget { get; }
+        public Angle AzimuthToTarget { get; }
         public IEnumerable<FireSolution> FireSolutions { get; }
 
         public BatterySolutionSet(
             Battery battery,
             Cartesian target,
-            Mils azToTarget,
+            Angle azToTarget,
             IEnumerable<FireSolution> fireSolutions)
         {
             Battery = battery;

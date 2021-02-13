@@ -8,17 +8,17 @@ namespace ArmaOps.Domain
     public class Weapon
     {
         public string Name { get; }
-        public Mils MinElevation { get; }
-        public Mils MaxElevation { get; }
+        public Angle MinElevation { get; }
+        public Angle MaxElevation { get; }
         public IEnumerable<double> ChargeVelocities { get; }
 
-        public Weapon(string name, Mils minElevation, Mils maxElevation, IEnumerable<double> chargeVelocities)
+        public Weapon(string name, Angle minElevation, Angle maxElevation, IEnumerable<double> chargeVelocities)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException("Must specify a name!");
             }
-            if (minElevation.Value > maxElevation.Value)
+            if (minElevation.Radians > maxElevation.Radians)
             {
                 throw new ArgumentException("Minimum elevation cannot be greater than maximum elevation!");
             }
@@ -42,13 +42,13 @@ namespace ArmaOps.Domain
             ChargeVelocities = chargeVelocities;
         }
 
-        public bool ElevationIsAllowed(Mils elevation) => (elevation.Value >= MinElevation.Value && elevation.Value <= MaxElevation.Value);
+        public bool ElevationIsAllowed(Angle elevation) => (elevation.Radians >= MinElevation.Radians && elevation.Radians <= MaxElevation.Radians);
 
         public Weapon EditName(string name) => new Weapon(name, MinElevation, MaxElevation, ChargeVelocities);
 
-        public Weapon EditMinElevation(Mils minElevation) => new Weapon(Name, minElevation, MaxElevation, ChargeVelocities);
+        public Weapon EditMinElevation(Angle minElevation) => new Weapon(Name, minElevation, MaxElevation, ChargeVelocities);
 
-        public Weapon EditMaxElevation(Mils maxElevation) => new Weapon(Name, MinElevation, maxElevation, ChargeVelocities);
+        public Weapon EditMaxElevation(Angle maxElevation) => new Weapon(Name, MinElevation, maxElevation, ChargeVelocities);
 
         public Weapon EditChargeVelocities(IEnumerable<double> chargeVelocities) => new Weapon(Name, MinElevation, MaxElevation, chargeVelocities);
 
